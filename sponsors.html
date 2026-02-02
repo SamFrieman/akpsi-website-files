@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sponsors | AKPsi Phi Upsilon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+/* ---------- CORE STYLING ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; }
+body.modal-open { overflow: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- NAV (UNIFIED WITH DONATE) ---------- */
+header { background: #002868; position: fixed; width: 100%; top: 0; z-index: 5000; height: 80px; display: flex; align-items: center; transition: transform 0.4s ease-in-out; }
+header.nav-hidden { transform: translateY(-100%); }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 0 60px; width: 100%; position: relative; }
+
+.logo { display: flex; align-items: center; gap: 15px; z-index: 6000; cursor: pointer; transition: transform 0.2s; }
+.logo:active { transform: scale(0.95); }
+.logo img { height: 50px; width: auto; display: block; }
+
+.nav-container { display: flex; align-items: center; gap: 15px; }
+.nav-glass { 
+    position: relative; 
+    background: rgba(255, 255, 255, 0.08); 
+    backdrop-filter: blur(15px); 
+    border-radius: 50px; 
+    padding: 4px 10px; 
+    border: 1px solid rgba(255,255,255,0.15); 
+    display: flex; 
+    align-items: center; 
+}
+
+.nav-lamp { 
+    position: absolute; 
+    height: 35px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: rgba(253, 185, 19, 0.15); 
+    border-radius: 25px; 
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+    z-index: 1; 
+    pointer-events: none; 
+    opacity: 0; 
+}
+.nav-lamp::before { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 10px; 
+    height: 2px; 
+    background: #fdb913; 
+    box-shadow: 0 0 12px 2px #fdb913; 
+}
+
+nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
+.nav-item { 
+    padding: 8px 24px; 
+    color: rgba(255, 255, 255, 0.8); 
+    font-weight: 500; 
+    font-size: 0.85rem; 
+    transition: color 0.3s; 
+    position: relative; 
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.nav-item.active, .nav-item:hover { color: #fff; }
+
+/* ---------- DROPDOWN ---------- */
+.has-dropdown { position: relative; }
+.dropdown-menu { 
+    position: absolute; 
+    top: 100%; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(20px) scale(0.95); 
+    background: #002868; 
+    border-radius: 12px; 
+    padding: 10px 0; 
+    min-width: 200px; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.3s ease; 
+    display: flex; 
+    flex-direction: column; 
+    z-index: 3000; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.has-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+.has-dropdown:hover .dropdown-menu { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateX(-50%) translateY(5px) scale(1); 
+}
+.dropdown-menu a { 
+    display: block; 
+    padding: 12px 25px; 
+    color: white; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    text-align: center; 
+    transition: all 0.3s ease;
+}
+.dropdown-menu a:hover { 
+    background: rgba(253, 185, 19, 0.15); 
+    color: #fdb913;
+    letter-spacing: 1px;
+}
+
+/* ---------- MOBILE NAVIGATION ---------- */
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 6000; position: relative; }
+.menu-toggle span { width: 30px; height: 3px; background: #fdb913; border-radius: 3px; transition: 0.3s; }
+
+@media (max-width: 1024px) {
+    nav { padding: 0 20px; }
+    .logo img { height: 42px; }
+    .nav-glass { 
+        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
+        background: #001b44; border-radius: 0; flex-direction: column; 
+        justify-content: center; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+        border: none; z-index: 5000;
+    }
+    .nav-glass.active { right: 0; }
+    nav ul { flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+    .nav-item { font-size: 1.4rem; font-weight: 700; color: white; text-transform: uppercase; }
+    .menu-toggle { display: flex; }
+    .nav-lamp { display: none; }
+    .dropdown-menu { 
+        position: relative; top: 0; left: 0; transform: none !important; 
+        opacity: 1; visibility: visible; display: none; background: transparent; box-shadow: none; 
+    }
+    .has-dropdown.open .dropdown-menu { display: flex; flex-direction: column; align-items: center; }
+}
+
+/* ---------- HERO ---------- */
+.sponsor-hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #001b44; }
+.hero-bg-layer { position: absolute; inset: -50px; background: linear-gradient(rgba(0, 20, 50, 0.65), rgba(0, 20, 50, 0.85)), url('ut southard.jpeg'); background-size: cover; background-position: center; z-index: 1; will-change: transform; transform: translateZ(0); }
+.hero-content { position: relative; z-index: 2; text-align: center; color: white; }
+.hero-content h1 { font-family: 'Cinzel', serif; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: 12px; line-height: 1; margin-bottom: 20px; }
+.accent-line { width: 80px; height: 4px; background: #fdb913; margin: 20px auto; }
+
+/* ---------- TIERS ---------- */
+.tiers-section { padding: 120px; background: #ffffff; text-align: center; }
+.investment-header { margin-bottom: 80px; }
+.investment-header h2 { font-family: 'Cinzel', serif; font-size: 3rem; color: #002868; letter-spacing: 5px; }
+
+.tier-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.tier-card {
+    position: relative;
+    background: #fff;
+    padding: 60px 40px;
+    border-radius: 0px; 
+    border: 1px solid #e0e0e0;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    text-align: left;
+    overflow: hidden;
+}
+
+.tier-card.elite {
+    border: 2px solid #fdb913;
+    background: #002868;
+    color: white;
+    transform: scale(1.05);
+    z-index: 5;
+    box-shadow: 0 40px 100px rgba(0, 40, 104, 0.2);
+}
+
+.tier-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-color: #fdb913; }
+.tier-card.elite:hover { transform: translateY(-20px) scale(1.07);}
+
+.tier-icon { font-size: 3.5rem; color: #002868; margin-bottom: 30px; }
+.tier-card.elite .tier-icon { color: #fdb913; }
+
+.tier-card h3 { color: black; font-family: 'Cinzel', serif; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
+.tier-card.elite h3 { color: #fdb913; }
+
+.price { color: black; font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 30px; display: block; }
+.tier-card.elite .price { color: #fdb913; }
+
+.tier-card ul { list-style: none; margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 30px; }
+.tier-card.elite ul { border-top: 1px solid rgba(255,255,255,0.1); }
+
+.tier-card li { margin-bottom: 18px; color: black; font-size: 1rem; display: flex; align-items: center; gap: 15px; font-weight: 500; }
+.tier-card li::before { content: "—"; color: #002868; font-weight: 900; }
+.tier-card.elite li::before { color: #fdb913; }
+.tier-card.elite li { color: rgba(255,255,255,0.8); }
+
+.watermark { color:#676767; position: absolute; bottom: -20px; right: -20px; font-family: 'Cinzel', serif; font-size: 8rem; opacity: 0.08; pointer-events: none; }
+.tier-card.elite .watermark { opacity: 0.05; color: #fff; }
+
+/* ---------- TALENT GATE ---------- */
+.talent-gate { background: #001b44; color: white; padding: 140px 10%; width: 100vw; margin-left: calc(50% - 50vw); display: flex; justify-content: space-between; align-items: center; position: relative;}
+.gate-text { max-width: 650px; z-index: 2; }
+.gate-text h2 { font-family: 'Cinzel', serif; font-size: 5rem; color: #fdb913; line-height: 0.9; margin-bottom: 30px; }
+.gate-text p { font-size: 1.2rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.8); }
+.gate-action { z-index: 2; text-align: right; }
+.enter-btn { background: #fdb913; color: #001b44; border: none; padding: 25px 60px; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; cursor: pointer; transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+.enter-btn:hover { background: #fff; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+
+/* ---------- AUTH MODAL ---------- */
+.auth-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.5s ease; }
+.auth-overlay.active { opacity: 1; visibility: visible; }
+.auth-modal { background: #001b44; padding: 60px; border: 1px solid rgba(253, 185, 19, 0.3); width: 100%; max-width: 500px; text-align: center; position: relative; transform: translateY(30px); transition: 0.5s ease; }
+.auth-overlay.active .auth-modal { transform: translateY(0); }
+.auth-modal h3 { font-family: 'Cinzel', serif; font-size: 2rem; color: #fdb913; margin-bottom: 10px; letter-spacing: 3px; }
+.auth-modal p { color: rgba(255,255,255,0.6); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; }
+.auth-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 15px 0; color: #fdb913; font-size: 1.5rem; text-align: center; outline: none; transition: 0.3s; font-family: 'Courier New', Courier, monospace; }
+.modal-close { position: absolute; top: 20px; right: 20px; color: white; cursor: pointer; opacity: 0.5; transition: 0.3s; }
+.shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+
+/* ---------- EXECUTIVE CONTACT ---------- */
+.contact-section { padding: 80px 10%; background: #fff; }
+.executive-banner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 60px; border-top: 2px solid #002868; padding-top: 60px; }
+.ex-img { width: 250px; height: 250px; background-image: url('Isabella Rivera.jpg'); background-size: cover; background-position: center; flex-shrink: 0; }
+.ex-info h3 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #002868; margin-bottom: 10px; }
+.ex-info .role { color: #fdb913; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 30px; }
+.ex-email { font-weight: 700; border-bottom: 2px solid #fdb913; padding-bottom: 5px; transition: 0.3s; color: #111; }
+.ex-email:hover { color: #fdb913; }
+
+.sponsor-statement-section {
+        background-color: #002868; /* AKPsi Blue */
+        padding: 120px 10%;
+        text-align: center;
+        color: white;
+        /* Initial state for fade-in */
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Visible state class applied by JS */
+.sponsor-statement-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sponsor-statement-section h2 {
+    font-family: 'Cinzel', serif;
+    color: #fdb913; /* AKPsi Gold/Yellow */
+    font-size: 3rem;
+    margin-bottom: 40px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.sponsor-statement-section p {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+.gold-accent {
+    width: 60px;
+    height: 3px;
+    background-color: #fdb913;
+    margin: 40px auto 0;
+}
+
+/* ---------- PLATINUM WIDE-SECTION ---------- */
+.platinum-wide-container {
+    max-width: 1400px;
+    margin: 60px auto 0;
+    padding: 0 20px;
+}
+
+.tier-card.platinum-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #e5e4e2 0%, #ffffff 50%, #d1d1d1 100%);
+    border: none;
+    padding: 60px 80px;
+    position: relative;
+    overflow: hidden;
+    color: #002868;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+    border-radius: 4px; /* Keeping that sharp professional look */
+}
+
+/* The "Glow" Sweep Animation */
+.tier-card.platinum-horizontal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255,255,255,0.6), 
+        transparent
+    );
+    transition: 0.5s;
+    animation: sweep 8s infinite;
+}
+
+.tier-card.platinum-horizontal::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.4) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shimmer 6s infinite;
+    pointer-events: none;
+}
+
+@keyframes sweep {
+    0% { left: -100%; }
+    20% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.plat-main-info {
+    flex: 1;
+    z-index: 2;
+}
+
+.plat-main-info h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+}
+
+.plat-main-info .price {
+    font-size: 4rem;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.plat-benefits {
+    flex: 1.5;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding-left: 60px;
+    border-left: 1px solid rgba(0, 40, 104, 0.2);
+}
+
+.plat-benefits ul {
+    list-style: none;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.plat-benefits li {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.plat-benefits li i {
+    color: #002868;
+    font-size: 1.2rem;
+}
+
+/* ---------- PLATINUM MOBILE FIX ---------- */
+@media (max-width: 1024px) {
+    .platinum-wide-container {
+        padding: 0 0px; /* Tighter padding for mobile screens */
+        margin-top: 40px;
+    }
+
+    .tier-card.platinum-horizontal {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+        gap: 30px;
+        /* Ensures the card doesn't cause horizontal scrolling on narrow iPhones */
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .plat-main-info h3 {
+        /* clamp(min, preferred, max) ensures font scales with screen size */
+        font-size: clamp(1.8rem, 8vw, 2.5rem); 
+        letter-spacing: 0px;
+        padding: 10px;
+    }
+
+    .plat-main-info .price {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+        margin-bottom: 10px;
+    }
+
+    .plat-benefits {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(0, 40, 104, 0.2);
+        padding-top: 30px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left; /* Keep text left-aligned for readability while centering the block */
+    }
+
+    .plat-benefits ul {
+        width: 100%;
+        max-width: 300px; /* Centers the list on the phone screen */
+    }
+
+    .plat-benefits li {
+        font-size: 1rem;
+        margin-bottom: 12px;
+        white-space: normal; /* Allows text to wrap on very small phones */
+    }
+
+    /* Fixed Watermark for Mobile */
+    .watermark {
+        font-size: 6rem !important; 
+        bottom: -5px !important;
+        right: -5px !important;
+        opacity: 0.04 !important;
+    }
+}
+       
+
+footer { background: #001b44; color: white; text-align: center; padding: 60px 20px; font-size: 0.8rem; letter-spacing: 2px; }
+
+@media (max-width: 1024px) {
+    .talent-gate { flex-direction: column; text-align: center; padding: 80px 5%; }
+    .gate-text h2 { font-size: 3.5rem; }
+    .gate-action { margin-top: 50px; width: 100%; }
+    .enter-btn { width: 100%; }
+    .executive-banner { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+
+<body>
+
+<header id="main-header">
+  <nav>
+    <div class="logo" onclick="location.href='index.html'">
+        <a href="index.html"><img src="utampa logo.png" alt="UT"></a>
+    </div>
+    <div class="nav-container">
+      <div class="menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+      <div class="nav-glass" id="nav-menu">
+        <div class="nav-lamp" id="lamp"></div>
+        <ul>
+          <li class="nav-item" onclick="location.href='about.html'">About</li>
+          <li class="nav-item" onclick="location.href='events.html'">Events</li>
+          <li class="nav-item has-dropdown" id="family-trigger">
+            The Family <i class="fas fa-chevron-down"></i>
+            <ul class="dropdown-menu">
+                <li><a href="officers.html">Officers</a></li>
+                <li><a href="brothers.html">The Brothers</a></li>
+            </ul>
+          </li>
+          <li class="nav-item" onclick="location.href='donate.html'">Donate</li>
+          <li class="nav-item" onclick="location.href='contact.html'">Contact</li>
+          <li class="nav-item active" onclick="location.href='sponsors.html'">Sponsors</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="sponsor-hero">
+    <div class="hero-bg-layer" id="heroBg"></div>
+    <div class="hero-content">
+        <h1>Sponsors</h1>
+        <div class="accent-line"></div>
+        <p style="letter-spacing: 5px; text-transform: uppercase; font-weight: 300;">Strategic Partnerships & Global Excellence</p>
+    </div>
+</div>
+
+<section class="sponsor-statement-section" id="messageSection">
+    <h2>A Message to Our Future Sponsors</h2>
+    <p>
+        At Alpha Kappa Psi's Phi Upsilon Chapter, we prioritize career-readiness and the professional growth of our brothers.
+        Our goal is to the build the next generation of professional leaders and change the way Tampa Bay sees student talent.
+        <br><br>
+        The Phi Upsilon Talent Network provides our partners with a direct window into the chapter’s most dedicated student leaders. 
+        We’ve curated a private roster of brothers who have consistently demonstrated technical proficiency and a commitment 
+        to principled business leadership. 
+        <br><br>
+        By entering this portal, you skip the traditional search process and gain immediate access to verified resumes 
+        and high-GPA candidates tailored to your specific industry needs. We invite you to connect with the next 
+        generation of professionals.
+    </p>
+    <div class="gold-accent"></div>
+</section>
+
+<section class="tiers-section">
+    <div class="investment-header">
+        <div class="sub-heading" style="letter-spacing: 5px; color: #aaa; margin-bottom: 10px;">Select Your Impact</div>
+        <h2>Investment Tiers</h2>
+    </div>
+
+    <div class="tier-container">
+        <div class="tier-card">
+            <div class="tier-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Bronze Partner</h3>
+            <span class="price">$500</span>
+            <ul>
+                <li>Job and Intership Postings Shared Internally</li>
+                <li>Name Listed as a Career Supporter of AKΨ</li>
+                <li>Social Media Recognition</li>
+            </ul>
+            <div class="watermark">BR</div>
+        </div>
+        <div class="tier-card elite">
+            <div class="tier-icon"><i class="fas fa-crown"></i></div>
+            <h3>Gold Executive</h3>
+            <span class="price">$1,500</span>
+            <ul>
+                <li>All Bronze and Silver Level Benefits</li>
+                <li>Access to Filtered Talent Network Profiles</li>
+                <li>Complete Resume Book Access</li>
+                <li>Logo on Website and Select Event Materials</li>
+                <li>Invitation to Attend Chapter Networking Events</li>
+            </ul>
+            <div class="watermark">AU</div>
+        </div>
+        <div class="tier-card">
+            <div class="tier-icon"><i class="fas fa-gem"></i></div>
+            <h3>Silver Corporate</h3>
+            <span class="price">$1,000</span>
+            <ul>
+                <li>All Bronze Level Benefits</li>
+                <li>Job and Intership Postings Shared with Members</li>
+                <li>Resume Book Access, Limited</li>
+                <li>Logo Listed on Our Sponsor Pages</li>
+            </ul>
+            <div class="watermark">AG</div>
+        </div>
+    </div>
+    <div class="platinum-wide-container">
+    <div class="tier-card platinum-horizontal">
+        <div class="plat-main-info">
+            <span class="role" style="color: #666; font-weight: 800; letter-spacing: 5px;">THE PINNACLE</span>
+            <h3>PLATINUM</h3>
+            <span class="price">$2,500+</span>
+            <p style="font-weight: 500; opacity: 0.8; margin-top: 10px;">The Ultimate Strategic Partnership.</p>
+        </div>
+
+        <div class="plat-benefits">
+            <ul>
+                <li><i class="fas fa-concierge-bell"></i>Complete Access to the AKΨ Talent Network</li>
+                <li><i class="fas fa-star"></i>Ability to Host a Private Info Session or Networking Event</li>
+            </ul>
+            <ul>
+                <li><i class="fas fa-monument"></i>Logo Featured on All Promotional Materials and Chapter Website</li>
+                <li><i class="fas fa-search"></i>Respective Recognition at All Major Chapter Events</li>
+                <li><i></i>Plus All Gold, Silver, and Bronze Level Benefits</li>
+            </ul>
+        </div>
+        
+        <div class="watermark" style="font-size: 15rem; right: -40px; bottom: -60px;">PT</div>
+    </div>
+</div>
+</section>
+
+<section class="talent-gate">
+    <div class="gate-text">
+        <h2>Talent <br>Network</h2>
+        <p>The Phi Upsilon Talent Network provides our partners with a direct window into the chapter’s most dedicated student leaders. Skip the traditional search process and gain immediate access to verified technical talent across Data Science, Finance, and Management. We invite you to <strong>connect with the next generation of professionals.</strong></p>
+    </div>
+    <div class="gate-action">
+        <button class="enter-btn" onclick="openAuth()">Enter Database</button>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="section-header" style="text-align: left;">
+        <h2 style="font-size: 1rem; color: #fdb913; letter-spacing: 8px; margin-bottom: 10px;">DIRECT</h2>
+        <h2 style="color: #002868;">Any Inquiries?</h2>
+    </div>
+
+    <div class="executive-banner">
+        <div class="ex-img"></div>
+        <div class="ex-info">
+            <span class="role">Vice President of Sponsorships and Fundraising</span>
+            <h3>Isabella Rivera</h3>
+            <a href="mailto:phiupsilon.sponsorship@gmail.com" class="ex-email">PHIUPSILON.SPONSORSHIP@GMAIL.COM</a>
+        </div>
+    </div>
+</section>
+
+<div class="auth-overlay" id="authOverlay">
+    <div class="auth-modal" id="authModal">
+        <i class="fas fa-times modal-close" onclick="closeAuth()"></i>
+        <h3>Secure Access</h3>
+        <p>Verification Required</p>
+        <input type="password" id="sponsorPass" class="auth-input" placeholder="SPONSOR CODE">
+        <button class="enter-btn" style="width:100%; margin-top:20px;" onclick="checkSponsorAuth()">Verify Identity</button>
+    </div>
+</div>
+
+<footer>© 2026 ALPHA KAPPA PSI — PHI UPSILON CHAPTER</footer>
+
+<script>
+    const lamp = document.getElementById("lamp");
+    const navItems = document.querySelectorAll(".nav-item");
+    const mobileToggle = document.getElementById("mobile-toggle");
+    const navMenu = document.getElementById("nav-menu");
+    const familyTrigger = document.getElementById('family-trigger');
+    const header = document.getElementById("main-header");
+    let lastScrollY = window.scrollY;
+
+    function moveLamp(el) {
+        if(!el || window.innerWidth <= 1024) { lamp.style.opacity = "0"; return; }
+        const parentRect = el.closest('.nav-glass').getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+        lamp.style.opacity = "1";
+        lamp.style.width = rect.width + "px";
+        lamp.style.left = (rect.left - parentRect.left) + "px";
+    }
+
+    window.addEventListener("load", () => moveLamp(document.querySelector('.nav-item.active')));
+    navItems.forEach(item => {
+        item.addEventListener("mouseenter", (e) => moveLamp(e.currentTarget));
+        item.addEventListener("mouseleave", () => moveLamp(document.querySelector(".nav-item.active")));
+    });
+
+    mobileToggle.addEventListener("click", () => {
+        mobileToggle.classList.toggle("active");
+        navMenu.classList.toggle("active");
+        document.body.style.overflow = navMenu.classList.contains("active") ? "hidden" : "auto";
+    });
+
+    familyTrigger.addEventListener("click", function(e) {
+        if (window.innerWidth <= 1024) this.classList.toggle("open");
+    });
+
+    window.addEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+            const scroll = window.pageYOffset;
+            if (scroll <= window.innerHeight) document.getElementById('heroBg').style.transform = `translateY(${scroll * 0.4}px) translateZ(0)`;
+            if (scroll > lastScrollY && scroll > 80) header.classList.add("nav-hidden");
+            else header.classList.remove("nav-hidden");
+            lastScrollY = scroll;
+        });
+    }, { passive: true });
+
+    function openAuth() {
+        document.getElementById('authOverlay').classList.add('active');
+        document.body.classList.add('modal-open');
+        setTimeout(() => document.getElementById('sponsorPass').focus(), 500);
+    }
+    function closeAuth() {
+        document.getElementById('authOverlay').classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+    function checkSponsorAuth() {
+        const input = document.getElementById('sponsorPass');
+        const modal = document.getElementById('authModal');
+        if (input.value === "PhiUpsilon2026") {
+            modal.innerHTML = "<h3>Access Granted</h3><p>Redirecting...</p>";
+            setTimeout(() => { window.location.href = "hire.html"; }, 1000);
+        } else {
+            modal.classList.add('shake');
+            setTimeout(() => { modal.classList.remove('shake'); input.value = ''; }, 400);
+        }
+    }
+    document.getElementById('sponsorPass').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkSponsorAuth(); });
+    // Intersection Observer to handle the fade-in on scroll
+    const observerOptions = { threshold: 0.3 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const section = document.getElementById('messageSection');
+        observer.observe(section);
+    });
+</script>
+</body>
+</html>
