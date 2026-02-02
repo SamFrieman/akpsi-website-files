@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Officers | Alpha Kappa Psi UT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+/* ---------- CORE STYLING ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+body { line-height: 1.6; background: #fdfdfd; color: #333; overflow-x: hidden; position: relative; min-height: 100vh; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- NAV ---------- */
+header { background: #002868; position: fixed; width: 100%; top: 0; z-index: 5000; height: 80px; display: flex; align-items: center; transition: transform 0.4s ease-in-out; }
+header.nav-hidden { transform: translateY(-100%); }
+nav { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0 60px; width: 100%; position: relative; }
+
+.logo { display: flex; align-items: center; gap: 15px; z-index: 6000; cursor: pointer; transition: transform 0.2s; }
+.logo:active { transform: scale(0.95); }
+.logo img { height: 50px; width: auto; display: block; }
+.logo-divider { width: 1px; height: 30px; background-color: rgba(255, 255, 255, 0.4); }
+
+.nav-container { display: flex; align-items: center; gap: 15px; }
+.nav-glass { position: relative; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); border-radius: 50px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; }
+
+.nav-lamp { position: absolute; height: 35px; top: 50%; transform: translateY(-50%); background: rgba(253, 185, 19, 0.15); border-radius: 25px; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); z-index: 1; pointer-events: none; opacity: 0; }
+.nav-lamp::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 10px; height: 2px; background: #fdb913; box-shadow: 0 0 12px 2px #fdb913; }
+
+nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
+.nav-item { padding: 8px 24px; color: rgba(255, 255, 255, 0.8); font-weight: 500; font-size: 0.85rem; transition: color 0.3s; cursor: pointer; position: relative; z-index: 2; display: flex; align-items: center; gap: 8px; }
+.nav-item.active, .nav-item:hover { color: #fff; }
+
+/* ---------- DROPDOWN ---------- */
+.has-dropdown { position: relative; }
+.dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px) scale(0.95); background: #002868; border-radius: 15px; padding: 10px 0; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.has-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; }
+.has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(5px) scale(1); }
+.dropdown-menu a { display: block; padding: 12px 25px; color: white; font-size: 0.8rem; text-transform: uppercase; text-align: center; transition: all 0.3s ease; }
+.dropdown-menu a:hover { background: rgba(253, 185, 19, 0.15); color: #fdb913; letter-spacing: 1px; }
+
+/* ---------- PROFILE MODAL ---------- */
+#profile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 6000; display: none; grid-template-columns: 1fr 1fr; animation: slideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1); overflow-y: auto; }
+.profile-left { padding: 8% 10%; display: flex; flex-direction: column; justify-content: center; }
+.profile-left h1 { font-family: 'Cinzel', serif; font-size: clamp(2rem, 5vw, 4.5rem); color: #002868; line-height: 1.1; margin-bottom: 25px; text-transform: uppercase; }
+.profile-details { margin-bottom: 40px; }
+.p-major { font-size: 1.4rem; font-weight: 700; color: #333; }
+.p-minor { font-size: 1.1rem; color: #666; font-style: italic; margin-bottom: 10px; }
+.p-class { font-size: 1rem; color: #fdb913; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
+.p-bio { font-size: 1rem; color: #555; max-width: 500px; line-height: 1.8; margin-top: 20px; }
+.profile-right { height: 100vh; background-size: cover; background-position: center; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+.close-profile { position: absolute; top: 30px; left: 30px; font-size: 0.8rem; font-weight: 800; color: #002868; cursor: pointer; z-index: 6100; text-transform: uppercase; letter-spacing: 2px; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 50px; }
+
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* ---------- HERO ---------- */
+.sub-hero { height: 45vh; margin-top: 80px; background: linear-gradient(rgba(0,40,104,0.6), rgba(0,0,0,0.7)), url('akpsi-leadership.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+.sub-hero h1 { font-family: 'Cinzel', serif; font-size: 4rem; letter-spacing: 5px; }
+
+/* ---------- GRID & INTERACTIVE CARDS ---------- */
+section { padding: 80px 10%; position: relative; z-index: 10; }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title h2 { font-family: 'Cinzel', serif; color: #002868; font-size: 2.5rem; margin-bottom: 5px; }
+.section-title .accent { width: 60px; height: 3px; background: #fdb913; margin: 15px auto; }
+.section-title p { font-size: 0.8rem; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+
+.officer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 80px; }
+
+.officer-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); text-align: center; border: 1px solid #eee; cursor: pointer; position: relative; }
+.officer-card:hover { transform: translateY(-10px); border-color: #fdb913; box-shadow: 0 30px 60px rgba(0, 40, 104, 0.15); }
+.officer-img-container { position: relative; width: 100%; height: 380px; overflow: hidden; }
+.officer-img { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.6s ease; }
+.officer-card:hover .officer-img { transform: scale(1.08); }
+
+.officer-info { padding: 25px; background: white; position: relative; z-index: 2; height: 100px; display: flex; align-items: center; justify-content: center; }
+.info-inner { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+
+.text-content { transition: opacity 0.4s ease, transform 0.4s ease; opacity: 1; }
+.officer-card:hover .text-content { opacity: 0; transform: translateY(-10px); }
+
+.text-content h3 { font-family: 'Cinzel', serif; color: #002868; font-size: 1.1rem; margin-bottom: 5px; }
+.role { color: #fdb913; font-weight: 700; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; }
+
+.view-profile-cta { position: absolute; top: 50%; left: 50%; transform: translate(-50%, 20%); color: #002868; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); background: #fdb913; padding: 12px 30px; border-radius: 50px; white-space: nowrap; pointer-events: none; box-shadow: 0 5px 15px rgba(253, 185, 19, 0.3); }
+.officer-card:hover .view-profile-cta { opacity: 1; transform: translate(-50%, -50%); }
+
+/* ---------- MOBILE NAVIGATION ---------- */
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 6000; position: relative; }
+.menu-toggle span { width: 30px; height: 3px; background: #fdb913; border-radius: 3px; transition: 0.3s; }
+
+/* MOBILE MEDIA QUERIES */
+@media (max-width: 1024px) {
+    nav { padding: 0 20px; }
+    .logo img { height: 42px; }
+    .nav-glass { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: #001b44; border-radius: 0; flex-direction: column; justify-content: center; transition: 0.5s; border: none; z-index: 5000; }
+    .nav-glass.active { right: 0; }
+    nav ul { flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+    .nav-item { font-size: 1.4rem; font-weight: 700; color: white; text-transform: uppercase; }
+    .menu-toggle { display: flex; }
+    .nav-lamp { display: none; }
+    .dropdown-menu { position: relative; top: 0; left: 0; transform: none !important; opacity: 1; visibility: visible; display: none; background: transparent; box-shadow: none; }
+    .has-dropdown.open .dropdown-menu { display: flex; flex-direction: column; align-items: center; }
+
+    /* Fix Profile Overlay for Mobile */
+    #profile-overlay { grid-template-columns: 1fr; display: none; padding-top: 0; }
+    .profile-right { height: 50vh; order: -1; position: relative; } /* Image on top */
+    .profile-left { padding: 100px 10% 60px; text-align: left; } /* Space for button at top */
+    .profile-left h1 { font-size: 2.2rem; margin-top: 0; }
+    .close-profile { position: fixed; top: 20px; left: 20px; background: #002868; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+    .sub-hero h1 { font-size: 2.5rem; }
+    section { padding: 60px 5%; }
+    .officer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .officer-img-container { height: 450px; }
+}
+
+footer { background: #001b44; color: white; text-align: center; padding: 40px; font-size: 0.85rem; letter-spacing: 2px; }
+</style>
+</head>
+
+<body>
+
+<div id="profile-overlay">
+    <div class="close-profile"><i class="fas fa-arrow-left"></i> Back to Chapter</div>
+    <div class="profile-left">
+        <h1 id="p-name">Name</h1>
+        <div class="profile-details">
+            <p id="p-major" class="p-major">Major</p>
+            <p id="p-minor" class="p-minor">Minor</p>
+            <p id="p-class" class="p-class">Year</p>
+        </div>
+        <p id="p-bio" class="p-bio">Bio goes here.</p>
+    </div>
+    <div class="profile-right" id="p-img"></div>
+</div>
+
+<header>
+  <nav>
+    <div class="logo" onclick="location.href='index.html'">
+        <a href="index.html"><img src="utampa logo.png" alt="UT"></a>
+    </div>
+    <div class="nav-container">
+      <div class="menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+      <div class="nav-glass" id="nav-glass">
+        <div class="nav-lamp" id="lamp"></div>
+        <ul>
+          <li class="nav-item" onclick="location.href='about.html'">About</li>
+          <li class="nav-item" onclick="location.href='events.html'">Events</li>
+          <li class="nav-item has-dropdown active" id="family-trigger">
+            The Family <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+            <ul class="dropdown-menu">
+                <li><a href="officers.html">Officers</a></li>
+                <li><a href="brothers.html">The Brothers</a></li>
+            </ul>
+          </li>
+          <li class="nav-item" onclick="location.href='donate.html'">Donate</li>
+          <li class="nav-item" onclick="location.href='contact.html'">Contact</li>
+          <li class="nav-item" onclick="location.href='sponsors.html'">Sponsors</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="sub-hero">
+  <h1>Chapter Leadership</h1>
+</div>
+
+<section>
+  <div class="section-title">
+    <h2>Executive Board</h2>
+    <div class="accent"></div>
+  </div>
+
+  <div class="officer-grid">
+    <div class="officer-card" data-name="Calabria Czarnecki" data-major="Finance" data-minor="Cybersecurity" data-class="Senior" data-img="Calabria Czarnecki.png" data-bio="As President of the Phi Upsilon Chapter of Alpha Kappa Psi at the University of Tampa, I lead a team of executive officers in driving strategic growth, member engagement, and professional development initiatives. I oversee chapter operations, event planning, and external partnerships to ensure a strong, values-driven experience for our 80+ members. My role focuses on fostering a culture of leadership, accountability, and excellence while strengthening our chapter’s presence on campus and in the professional community.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Calabria Czarnecki.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Calabria Czarnecki</h3>
+                <p class="role">Chapter President</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Dorian Furr" data-major="Business Administration" data-minor="N/A" data-class="Junior" data-img="Dorian Furr.png" data-bio="As Vice President of Administration, I monitor the operations of the chapter as a whole. I map our calendars, agendas, forms, and deadlines so no one has to guess what is due or where to find it. I manage university registration and chapter documentation, improve the way we share information, and keep everything organized so officers and members can spend more time building and less time chasing details.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Dorian Furr.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Dorian Furr</h3>
+                <p class="role">VP of Administration</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Ainsley Jeffers" data-major="Business" data-minor="N/A" data-class="Senior" data-img="Ainsley Jeffers.png" data-bio="As Vice President of Membership, I ensure the growth and engagement of our organization by leading recruitment strategy and organizing events that attract prospective members. I coordinate interviews and selection processes with the executive board, manage and delegate tasks to committee members, and oversee onboarding to foster a strong, inclusive culture. I work to strengthen member retention and operational efficiency while supporting long-term organizational development.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Ainsley Jeffers.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Ainsley Jeffers</h3>
+                <p class="role">VP of Membership</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Connor Stacklum" data-major="Finance" data-minor="N/A" data-class="Junior" data-img="Connor Stacklum.png" data-bio="I manage the chapter's financial portfolio, including budgeting, reporting, and investment in professional development programs for our brothers.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Connor Stacklum.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Connor Stacklum</h3>
+                <p class="role">Treasurer</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Vincent Mendel" data-major="Finance and Marketing" data-minor="Business Analytics" data-class="Junior" data-img="Vincent Mendel.png" data-bio="As Secretary of Alpha Kappa Psi’s Phi Upsilon Chapter, I manage our chapter’s internal communications, records, and points system to keep everything organized, transparent, and running smoothly. I’m passionate about building efficient systems, strengthening chapter engagement, and helping our brotherhood stay connected and accountable.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Vincent Mendel.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Vincent Mendel</h3>
+                <p class="role">Secretary</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Claire Coates" data-major="Economics" data-minor="N/A" data-class="Junior" data-img="Claire Coates.png" data-bio="Lead alumni engagement initiatives by planning professional panels, networking events, and outreach efforts that strengthen connections between current members and alumni. Coordinate communication, manage event logistics, and collaborate with the executive board to ensure alumni programming aligns with the fraternity’s professional development goals.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Claire Coates.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Claire Coates</h3>
+                <p class="role">VP of Alumni Relations</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Sophia Carraway" data-major="International Business and Economics" data-minor="N/A" data-class="Junior" data-img="Sophia Carraway.png" data-bio="As Vice President of Rituals, I am responsible for strengthening chapter culture through meaningful traditions and member engagement. I ensure our rituals reflect our values and foster a connected, supportive environment for professional growth.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Sophia Carraway.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Sophia Carraway</h3>
+                <p class="role">VP of Rituals</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Aiden Huber" data-major="Accounting" data-minor="N/A" data-class="Junior" data-img="Aiden Huber.png" data-bio="I organize professional treks, workshops, and networking events that provide our brothers with a competitive edge.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Aiden Huber.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Aiden Huber</h3>
+                <p class="role">VP of Professionalism</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Isabella Rivera" data-major="Entrepreneurship" data-minor="N/A" data-class="Junior" data-img="Isabella Rivera.jpg" data-bio="I am architecting our chapter’s very first corporate partnership program, designed to connect our ambitious brothers with the Tampa Bay business community.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Isabella Rivera.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Isabella Rivera</h3>
+                <p class="role">VP of Sponsorships</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2>Committee Chairs</h2>
+    <div class="accent"></div>
+  </div>
+
+  <div class="officer-grid">
+    <div class="officer-card" data-name="Dilan Kochhar" data-major="Data Science" data-minor="Computer Science and Math" data-class="Sophomore" data-img="me.jpg" data-bio="As Technology Chair, I manage our chapter's website and digital infrastructure, ensuring we utilize modern tools to streamline professional output.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('me.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Dilan Kochhar</h3>
+                <p class="role">Chairman of Technology</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Lorena Lopez" data-major="Accounting" data-minor="N/A" data-class="Sophomore" data-img="Lorena Lopez.jpg" data-bio=" In charge of leading and organizing the pledge education program, ensuring new members understand organizational values, expectations, and policies.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Lorena Lopez.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Lorena Lopez</h3>
+                <p class="role">Chairman of Prof. Prog.</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Hayden Reich" data-major="Finance" data-minor="N/A" data-class="Sophomore" data-img="Hayden Reich.jpeg" data-bio="Collegiate track athlete demonstrating a strong sense of discipline and balancing out professional experience and numerous on-campus leadership roles. I hold a strong feeling of brotherhood to the Phi Upsilon chapter and I am in charge of reviewing ethical fund usage within the chapter.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Hayden Reich.jpeg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Hayden Reich</h3>
+                <p class="role">Chairman of Auditing</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Hailey Swenson" data-major="Marketing" data-minor="N/A" data-class="Freshman" data-img="Hailey Swenson.jpeg" data-bio="My name is Hailey Swenson. I’m a motivated student from Worcester, MA, currently living in Tampa, FL and attending school at The University of Tampa for Marketing. With experience in customer service, tutoring, and leadership, I bring strong communication, problem-solving, and relationship-building skills. Im passionate about marketing, business strategy, and professional growth.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Hailey Swenson.jpeg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Hailey Swenson</h3>
+                <p class="role">Chairman of Alumni Relations</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Tyler Mezadurian" data-major="International Business and Marketing" data-minor="N/A" data-class="Sophomore" data-img="Tyler Mezadurian.png" data-bio=" In charge of leading and organizing the pledge education program, ensuring new members understand organizational values, expectations, and policies.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Tyler Mezadurian.jpeg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Tyler Mezadurian</h3>
+                <p class="role">Chairman of Pledge Instruction</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Sandra Nizborski" data-major="Business" data-minor="N/A" data-class="Sophomore" data-img="Sandra Nizborski.jpg" data-bio="I support the VP of Rituals in maintaining the traditions that define the Alpha Kappa Psi experience.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Sandra Nizborski.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Sandra Nizborski</h3>
+                <p class="role">Chairman of Rituals</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Sam DeWeerdt" data-major="International Business" data-minor="N/A" data-class="Sophomore" data-img="Sam DeWeerdt.jpg" data-bio="I’m Sandra Nizborski, a freshman Marketing major from Carlstadt, New Jersey, and I currently work as a Marketing Coordinator for the Meadowlands YMCA, where I began as an intern in high school. Within Alpha Kappa Psi, I serve as the Chair of Rituals, helping plan and execute chapter rituals, coordinate logistics, and support initiation and induction ceremonies alongside the Rituals Team. I enjoy working closely with mentors and being part of the process that welcomes and develops new brothers. I’m passionate about leadership and teamwork, and I hope to one day work my way into a leadership role and eventually own my own company. I also hold a Seal of Biliteracy in Polish, which reflects my strong communication skills.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Sam DeWeerdt.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Sam DeWeerdt</h3>
+                <p class="role">Co-Chairman of Fundraising</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Madelyn Luber" data-major="International Business and Management" data-minor="Justice, Law, and Advocacy" data-class="Junior" data-img="Madelyn Luber.jpg" data-bio="I collaborate on fundraising efforts to support chapter growth and philanthropic outreach.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Madelyn Luber.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Madelyn Luber</h3>
+                <p class="role">Co-Chairman of Fundraising</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Jonathan Cutura" data-major="Finance" data-minor="N/A" data-class="Junior" data-img="Johnathan Cutura.png" data-bio="As Chair of the Social Committee, I lead the planning, coordination, and execution of all social and brotherhood events. I manage timelines, delegate responsibilities across the committee, and collaborate with fraternity leadership to ensure events are well-organized, inclusive, and aligned with our professional values.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Johnathan Cutura.png');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Jonathan Cutura</h3>
+                <p class="role">Chairman of Social Operations</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Michael La Torre" data-major="Business Administration" data-minor="N/A" data-class="Junior" data-img="Michael La Torre.jpg" data-bio="I organize community service events that allow our chapter to give back to the Tampa community.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Michael La Torre.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Michael La Torre</h3>
+                <p class="role">Chairman of Service</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Azumi Ward" data-major="International Business and Management" data-minor="N/A" data-class="Sophomore" data-img="Azumi Ward.jpg" data-bio="As Chair of the International Committee, I lead initiatives that connect members with global opportunities and promote engagement with study abroad experiences. I coordinate communication with brothers studying internationally, spotlight their experiences during chapter meetings, and develop programs that encourage cultural awareness and global career readiness within our chapter.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Azumi Ward.jpg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Azumi Ward</h3>
+                <p class="role">Chairman of Intl. Relations</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Danielle Davidson" data-major="Accounting" data-minor="N/A" data-class="Junior" data-img="Danielle Davidson.jpeg" data-bio="As Marketing Chair, I lead the chapter’s branding, recruitment promotion, and event marketing to ensure our organization is represented professionally and consistently. I manage all promotional materials, social media content, and outreach strategies that attract new members and engage our community. My goal is to tell our chapter’s story in a way that reflects our values, culture, and impact. Through creative strategy and clear communication, I help connect students to the opportunities our chapter provides.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Danielle Davidson.jpeg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Danielle Davidson</h3>
+                <p class="role">Chairman of Marketing</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="officer-card" data-name="Logan Kemmerer" data-major="Marine Science and Biology" data-minor="N/A" data-class="Sophomore" data-img="Logan Kemmerer.jpeg" data-bio="As Chair of the Non–College of Business Committee, I lead efforts to connect students from all majors and minors with the professional development, networking, and leadership opportunities offered through Alpha Kappa Psi. I coordinate recruitment and outreach initiatives, work with fraternity leadership to strengthen diversity within the organization's majors, and support brothers in using AKPsi’s resources to prepare them for a wide range of career paths.">
+      <div class="officer-img-container">
+        <div class="officer-img" style="background-image: url('Logan Kemmerer.jpeg');"></div>
+      </div>
+      <div class="officer-info">
+        <div class="info-inner">
+            <div class="text-content">
+                <h3>Logan Kemmerer</h3>
+                <p class="role">Chairman of Non-COB Operations</p>
+            </div>
+            <div class="view-profile-cta">View Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 ALPHA KAPPA PSI — PHI UPSILON CHAPTER — UNIVERSITY OF TAMPA</footer>
+
+<script>
+const lamp = document.getElementById("lamp");
+const navItems = document.querySelectorAll(".nav-item");
+const mobileToggle = document.getElementById("mobile-toggle");
+const navMenu = document.getElementById("nav-glass");
+const familyTrigger = document.getElementById('family-trigger');
+const overlay = document.getElementById('profile-overlay');
+const closeBtn = document.querySelector('.close-profile');
+const cards = document.querySelectorAll('.officer-card');
+const header = document.querySelector("header");
+let lastScrollY = window.scrollY;
+
+function moveLamp(el) {
+    if(!el || window.innerWidth <= 1024) { 
+        lamp.style.opacity = "0"; 
+        return; 
+    }
+    const parentRect = el.closest('.nav-glass').getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
+    lamp.style.opacity = "1";
+    lamp.style.width = rect.width + "px";
+    lamp.style.left = (rect.left - parentRect.left) + "px";
+}
+
+window.addEventListener("load", () => {
+    const activeItem = document.querySelector('.nav-item.active');
+    if (activeItem) moveLamp(activeItem);
+});
+
+navItems.forEach(item => {
+    item.addEventListener("mouseenter", (e) => moveLamp(e.currentTarget));
+    item.addEventListener("mouseleave", () => {
+        const activeItem = document.querySelector(".nav-item.active");
+        moveLamp(activeItem);
+    });
+});
+
+window.addEventListener("resize", () => {
+    const activeItem = document.querySelector(".nav-item.active");
+    moveLamp(activeItem);
+});
+
+mobileToggle.addEventListener("click", () => {
+    mobileToggle.classList.toggle("active");
+    navMenu.classList.toggle("active");
+    document.body.style.overflow = navMenu.classList.contains("active") ? "hidden" : "auto";
+});
+
+if (familyTrigger) {
+    familyTrigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) familyTrigger.classList.toggle('open');
+    });
+}
+
+cards.forEach(card => {
+    card.addEventListener('click', () => {
+        document.getElementById('p-name').innerText = card.dataset.name;
+        document.getElementById('p-major').innerText = card.dataset.major;
+        document.getElementById('p-minor').innerText = (card.dataset.minor !== "N/A" && card.dataset.minor !== "") ? "Minor: " + card.dataset.minor : "";
+        document.getElementById('p-class').innerText = card.dataset.class;
+        document.getElementById('p-bio').innerText = card.dataset.bio; 
+        document.getElementById('p-img').style.backgroundImage = `url('${card.dataset.img}')`;
+        overlay.style.display = window.innerWidth > 1024 ? 'grid' : 'block';
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+});
+
+window.addEventListener("scroll", () => {
+    if (navMenu.classList.contains("active")) return;
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 80) header.classList.add("nav-hidden");
+    else header.classList.remove("nav-hidden");
+    lastScrollY = currentScrollY;
+});
+</script>
+
+</body>
+</html>
