@@ -1,0 +1,37 @@
+# Static Site Hardening
+
+# Disable directory listing
+Options -Indexes
+
+# Disable all server-side execution
+<FilesMatch "\.(php|phtml|phar|cgi|pl|py|rb)$">
+  Deny from all
+</FilesMatch>
+
+# Enforce HTTPS (only if SSL is active)
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Content Security Policy (baseline)
+<IfModule mod_headers.c>
+  Header set Content-Security-Policy "
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' https: data:;
+    font-src 'self';
+    object-src 'none';
+    base-uri 'none';
+    frame-ancestors 'none';
+  "
+</IfModule>
