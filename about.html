@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Meet the Chapter | Alpha Kappa Psi UT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; position: relative; min-height: 100vh; display: flex; flex-direction: column; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- NAV ---------- */
+header { background: #002868; position: fixed; width: 100%; top: 0; z-index: 5000; height: 80px; display: flex; align-items: center; transition: transform 0.4s ease-in-out; }
+header.nav-hidden { transform: translateY(-100%); }
+nav { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0 60px; width: 100%; position: relative; }
+
+.logo { display: flex; align-items: center; gap: 15px; z-index: 6000; cursor: pointer; transition: transform 0.2s; }
+.logo:active { transform: scale(0.95); }
+.logo img { height: 50px; width: auto; display: block; }
+.logo-divider { width: 1px; height: 30px; background-color: rgba(255, 255, 255, 0.4); }
+
+.nav-container { display: flex; align-items: center; gap: 15px; }
+.nav-glass { 
+    position: relative; 
+    background: rgba(255, 255, 255, 0.08); 
+    backdrop-filter: blur(15px); 
+    border-radius: 50px; 
+    padding: 4px 10px; 
+    border: 1px solid rgba(255,255,255,0.15); 
+    display: flex; 
+    align-items: center; 
+}
+
+.nav-lamp { 
+    position: absolute; 
+    height: 35px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: rgba(253, 185, 19, 0.15); 
+    border-radius: 25px; 
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+    z-index: 1; 
+    pointer-events: none; 
+    opacity: 0; 
+}
+.nav-lamp::before { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 10px; 
+    height: 2px; 
+    background: #fdb913; 
+    box-shadow: 0 0 12px 2px #fdb913; 
+}
+
+nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
+.nav-item { 
+    padding: 8px 24px; 
+    color: rgba(255, 255, 255, 0.8); 
+    font-weight: 500; 
+    font-size: 0.85rem; 
+    transition: color 0.3s; 
+    cursor: pointer; 
+    position: relative; 
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-item.active, .nav-item:hover { color: #fff; }
+
+/* ---------- DROPDOWN ---------- */
+.has-dropdown { position: relative; }
+.dropdown-menu { 
+    position: absolute; 
+    top: 100%; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(20px) scale(0.95); 
+    background: #002868; 
+    border-radius: 15px; 
+    padding: 10px 0; 
+    min-width: 200px; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.3s ease; 
+    display: flex; 
+    flex-direction: column; 
+    z-index: 3000; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.has-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+.has-dropdown:hover .dropdown-menu { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateX(-50%) translateY(5px) scale(1); 
+}
+.dropdown-menu a { 
+    display: block; 
+    padding: 15px 20px; 
+    color: white; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    text-align: center; 
+    transition: all 0.3s ease;
+}
+.dropdown-menu a:hover { 
+    background: rgba(253, 185, 19, 0.15); 
+    color: #fdb913;
+    letter-spacing: 1px;
+}
+
+/* ---------- MOBILE NAVIGATION ---------- */
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 6000; position: relative; }
+.menu-toggle span { width: 30px; height: 3px; background: #fdb913; border-radius: 3px; transition: 0.3s; }
+
+@media (max-width: 1024px) {
+    nav { padding: 0 20px; }
+    .logo img { height: 42px; }
+    .nav-glass { 
+        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
+        background: #001b44; border-radius: 0; flex-direction: column; 
+        justify-content: center; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+        border: none; z-index: 5000;
+    }
+    .nav-glass.active { right: 0; }
+    nav ul { flex-direction: column; align-items: center; gap: 25px; width: 100%; }
+    .nav-item { font-size: 1.4rem; width: 100%; justify-content: center; padding: 12px 0; color: white; text-transform: uppercase; font-weight: 700; }
+    .menu-toggle { display: flex; }
+    .nav-lamp { display: none; }
+    .dropdown-menu { position: relative; top: 0; left: 0; transform: none !important; display: none; background: transparent; box-shadow: none; }
+    .has-dropdown.open .dropdown-menu { display: flex; flex-direction: column; align-items: center; }
+}
+
+/* ---------- INTIMIDATING HERO ---------- */
+.about-hero { 
+    height: 100vh; 
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(10,10,10,1)), url('akpsi 1.jpg'); 
+    background-size: cover; 
+    background-position: center 20%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    position: relative; 
+    z-index: 1; 
+    overflow: hidden;
+}
+
+.about-hero h1 { 
+    font-family: 'Cinzel', serif; 
+    font-size: 25vw; 
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: transparent; 
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.6); 
+    letter-spacing: 2vw;
+    filter: drop-shadow(0 0 30px rgba(0, 40, 104, 0.8)); 
+    user-select: none;
+    transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-hero:hover h1 {
+    -webkit-text-stroke: 2px #fdb913; 
+    filter: drop-shadow(0 0 60px rgba(253, 185, 19, 0.4));
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .about-hero h1 { 
+        font-size: 35vw; 
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
+        letter-spacing: 1vw; 
+    }
+}
+
+/* ---------- CHAPTER INTRO ---------- */
+.chapter-intro { padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; background: white; color: #333; position: relative; z-index: 10; }
+.heading-with-crest { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+.heading-with-crest img { height: 50px; }
+.chapter-intro h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #002868; }
+.intro-image { height: 800px; background: url('minaret.jpeg') center/cover; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+@media (max-width: 768px) {
+    .chapter-intro { grid-template-columns: 1fr; padding: 60px 25px; text-align: center; }
+    .heading-with-crest { justify-content: center; }
+    .intro-image { height: 280px; order: -1; }
+}
+
+/* ---------- VALUES SECTION ---------- */
+.values-strip { background: #fdfdfd; padding: 80px 10%; color: #333; position: relative; z-index: 10; }
+.values-header { text-align: center; margin-bottom: 50px; }
+.values-header h2 { font-family: 'Cinzel', serif; color: #002868; font-size: 2.5rem; }
+.values-row { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 30px; }
+
+.value-block { 
+    background: white; padding: 40px 30px; border-radius: 20px; text-align: center; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; flex: 1; 
+    min-width: 280px; max-width: 320px; opacity: 0; transform: translateY(30px); 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.value-block.active { opacity: 1; transform: translateY(0); }
+.value-block:hover {
+    transform: translateY(-10px);
+    border-color: #fdb913;
+    box-shadow: 0 15px 40px rgba(0, 40, 104, 0.1);
+}
+.value-block i { font-size: 2.5rem; color: #fdb913; margin-bottom: 20px; transition: 0.3s; }
+.value-block:hover i { transform: scale(1.2); }
+.value-block h3 { font-family: 'Cinzel', serif; color: #002868; margin-bottom: 12px; }
+
+/* ---------- PARALLAX SECTION ---------- */
+.parallax-container { background: #0a0a0a; padding: 120px 5% 150px 5%; overflow: hidden; position: relative; z-index: 10; }
+.parallax-header { text-align: center; margin-bottom: 80px; }
+.parallax-header h2 { font-family: 'Cinzel', serif; font-size: 3.5rem; color: #fdb913; }
+.grid-wrapper { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+    height: auto !important; 
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); 
+}
+.column { display: flex; flex-direction: column; gap: 30px; will-change: transform; }
+.grid-item { width: 100%; border-radius: 12px; overflow: hidden; aspect-ratio: 4/5; background: #111; border: 1px solid rgba(255,255,255,0.05); }
+.grid-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s; filter: grayscale(20%); }
+.grid-item:hover img { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
+
+/* ---------- HISTORY ---------- */
+.history-section { background: #0a0a0a; padding: 120px 10%; position: relative; z-index: 10; border-top: 1px solid rgba(255,255,255,0.05); }
+.history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
+.history-card h2 { font-family: 'Cinzel', serif; color: #fdb913; font-size: 2.2rem; margin-bottom: 25px; }
+.history-card p { font-size: 1.05rem; color: #aaa; line-height: 1.9; margin-bottom: 15px; }
+.history-card .accent-year { color: #fdb913; font-weight: 700; font-size: 1.2rem; display: block; margin-bottom: 8px; letter-spacing: 2px; }
+
+/* ---------- GOVERNANCE ---------- */
+.governance-section { background: #001b44; padding: 100px 10%; text-align: center; position: relative; z-index: 10; }
+.governance-section h2 { font-family: 'Cinzel', serif; color: white; font-size: 2.5rem; margin-bottom: 25px; }
+.governance-section p { max-width: 700px; margin: 0 auto 50px; color: rgba(255,255,255,0.75); font-size: 1.1rem; }
+.btn-row { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+.gov-btn { padding: 20px 40px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.4s; backdrop-filter: blur(10px); }
+.gov-btn:hover { background: #fdb913; color: #002868; border-color: #fdb913; transform: translateY(-3px); }
+
+footer { padding: 50px; text-align: center; background: #002868; font-size: 0.85rem; letter-spacing: 2px; color: #eee; position: relative; z-index: 200; margin-top: auto; }
+</style>
+</head>
+
+<body>
+<main>
+  <header>
+    <nav>
+      <div class="logo" onclick="location.href='index.html'">
+        <a href="index.html"><img src="utampa logo.png" alt="UT"></a>
+      </div>
+      <div class="nav-container">
+          <div class="menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+          <div class="nav-glass" id="nav-menu">
+            <div class="nav-lamp" id="lamp"></div>
+            <ul>
+              <li class="nav-item active" onclick="location.href='about.html'">About</li>
+              <li class="nav-item" onclick="location.href='events.html'">Events</li>
+              <li class="nav-item has-dropdown" id="family-trigger">
+                The Family <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                <ul class="dropdown-menu">
+                  <li><a href="officers.html">Officers</a></li>
+                  <li><a href="brothers.html">The Brothers</a></li>
+                </ul>
+              </li>
+              <li class="nav-item" onclick="location.href='donate.html'">Donate</li>
+              <li class="nav-item" onclick="location.href='contact.html'">Contact</li>
+              <li class="nav-item" onclick="location.href='sponsors.html'">Sponsors</li>
+            </ul>
+          </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="about-hero">
+      <h1>AK&Psi;</h1>
+  </section>
+
+  <section class="chapter-intro">
+    <div class="text-content">
+      <div class="heading-with-crest"><h2>The Phi Upsilon Chapter</h2></div>
+      <p>Developing principled business leaders at the University of Tampa.</p>
+      <p style="color: #666; margin-bottom: 25px;">A legacy of excellence through meaningful service and lifelong networking.</p>
+    </div>
+    <div class="intro-image"></div>
+  </section>
+
+  <section class="values-strip">
+    <div class="values-header"><h2>Our Core Values</h2><div style="width: 60px; height: 3px; background: #fdb913; margin: 15px auto;"></div></div>
+    <div class="values-row">
+      <div class="value-block scroll-reveal"><i class="fas fa-handshake"></i><h3>Brotherhood</h3><p>Trust, respect, and cooperation are the keys to our success.</p></div>
+      <div class="value-block scroll-reveal"><i class="fas fa-balance-scale"></i><h3>Integrity</h3><p>Doing the right thing even when no one is watching.</p></div>
+      <div class="value-block scroll-reveal"><i class="fas fa-graduation-cap"></i><h3>Knowledge</h3><p>A commitment to academic excellence and life-long learning.</p></div>
+      <div class="value-block scroll-reveal"><i class="fas fa-link"></i><h3>Unity</h3><p>Moving forward as one brotherhood with a shared vision.</p></div>
+      <div class="value-block scroll-reveal"><i class="fas fa-hand-holding-heart"></i><h3>Service</h3><p>A lifelong commitment to giving back to our communities.</p></div>
+    </div>
+  </section>
+
+  <section class="parallax-container" id="parallax-section">
+    <div class="parallax-header"><h2>Life as a Brother</h2></div>
+    <div class="grid-wrapper">
+      <div class="column col-1" id="col1">
+        <div class="grid-item"><img src="akpsi 3.png"></div>
+        <div class="grid-item"><img src="akpsi 6.png"></div>
+        <div class="grid-item"><img src="akpsi 2.jpg"></div>
+        <div class="grid-item"><img src="laab4.JPG"></div>
+        <div class="grid-item"><img src="laab5.JPG"></div>
+        <div class="grid-item"><img src="akpsi 1.jpg"></div>
+      </div>
+      <div class="column col-2" id="col2">
+        <div class="grid-item"><img src="laab1.JPG"></div>
+        <div class="grid-item"><img src="akpsi 10.png"></div>
+        <div class="grid-item"><img src="laab3.JPG"></div>
+        <div class="grid-item"><img src="akpsi 8.png"></div>
+        <div class="grid-item"><img src="akpsi 5.png"></div>
+        <div class="grid-item"><img src="laab6.JPG"></div>
+        <div class="grid-item"><img src="akpsi 7.png"></div>
+      </div>
+      <div class="column col-3" id="col3">
+        <div class="grid-item"><img src="akpsi 12.png"></div>
+        <div class="grid-item"><img src="laab2.JPG"></div>
+        <div class="grid-item"><img src="akpsi 14.png"></div>
+        <div class="grid-item"><img src="akpsi 13.png"></div>
+        <div class="grid-item"><img src="laab8.jpg"></div>
+        <div class="grid-item"><img src="laab7.JPG"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="history-section">
+    <div class="history-grid">
+        <div class="history-card">
+            <span class="accent-year">October 5, 1904 - NEW YORK</span>
+            <h2>Our Global Origins</h2>
+            <p>Alpha Kappa Psi traces its prestigious heritage to New York University, where it was founded on October 5, 1904, as the first professional business fraternity in the United States.</p>
+        </div>
+        <div class="history-card">
+            <span class="accent-year">April 20, 2024 - TAMPA</span>
+            <h2>Phi Upsilon Legacy</h2>
+            <p>Official campus recognition followed on February 1, 2024. Founding members and early classes have since transformed Phi Upsilon into one of the most elite professional organizations on campus.</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="governance-section">
+    <h2>Integrity & Standards</h2>
+    <p>We hold our brothers to the highest ethical and professional standards as outlined by the National Organization.</p>
+    <div class="btn-row">
+        <a href="https://akpsi.org/wp-content/uploads/2023/08/Policy-Code-of-Conduct.pdf" target="_blank" class="gov-btn">Code of Conduct</a>
+        <a href="https://akpsi.org/wp-content/uploads/2025/05/Disciplinary-Procedures-Code-of-Conduct-October-2022.pdf" target="_blank" class="gov-btn">Disciplinary Procedures</a>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 ALPHA KAPPA PSI — PHI UPSILON CHAPTER — UNIVERSITY OF TAMPA</footer>
+
+<script>
+const lamp = document.getElementById("lamp"); 
+const navItems = document.querySelectorAll(".nav-item");
+const mobileToggle = document.getElementById("mobile-toggle");
+const navMenu = document.getElementById("nav-menu");
+const familyTrigger = document.getElementById('family-trigger');
+const header = document.querySelector("header");
+let lastScrollY = window.scrollY;
+
+function moveLamp(el) {
+    if(!el || window.innerWidth <= 1024) { 
+        lamp.style.opacity = "0"; 
+        return; 
+    }
+    const parentRect = el.closest('.nav-glass').getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
+    lamp.style.opacity = "1";
+    lamp.style.width = rect.width + "px";
+    lamp.style.left = (rect.left - parentRect.left) + "px";
+}
+
+window.addEventListener("load", () => {
+    const activeItem = document.querySelector('.nav-item.active');
+    if (activeItem) moveLamp(activeItem);
+});
+
+navItems.forEach(item => {
+    item.addEventListener("mouseenter", (e) => moveLamp(e.currentTarget));
+    item.addEventListener("mouseleave", () => moveLamp(document.querySelector(".nav-item.active")));
+});
+
+window.addEventListener("resize", () => moveLamp(document.querySelector(".nav-item.active")));
+
+mobileToggle.addEventListener("click", () => {
+    mobileToggle.classList.toggle("active");
+    navMenu.classList.toggle("active");
+    document.body.style.overflow = navMenu.classList.contains("active") ? "hidden" : "auto";
+});
+
+if (familyTrigger) {
+    familyTrigger.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) familyTrigger.classList.toggle('open');
+    });
+}
+
+const col1 = document.getElementById('col1'); 
+const col2 = document.getElementById('col2'); 
+const col3 = document.getElementById('col3');
+const parallaxSection = document.getElementById('parallax-section');
+
+window.addEventListener('scroll', () => {
+    const sectionTop = parallaxSection.offsetTop; 
+    const scrollPosition = window.scrollY; 
+    const windowHeight = window.innerHeight;
+    
+    if (scrollPosition > sectionTop - windowHeight) {
+        const relativeScroll = scrollPosition - sectionTop;
+        col1.style.transform = `translateY(${relativeScroll * 0.12}px)`; 
+        col2.style.transform = `translateY(${relativeScroll * -0.15}px)`; 
+        if(col3) col3.style.transform = `translateY(${relativeScroll * 0.08}px)`;
+    }
+    
+    document.querySelectorAll('.scroll-reveal').forEach(el => { 
+        if (el.getBoundingClientRect().top < windowHeight * 0.85) el.classList.add('active'); 
+    });
+
+    if (navMenu.classList.contains("active")) return;
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 80) header.classList.add("nav-hidden"); 
+    else header.classList.remove("nav-hidden");
+    lastScrollY = currentScrollY;
+});
+</script>
+</body>
+</html>
