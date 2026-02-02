@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Talent Network | Alpha Kappa Psi UT</title>
+<meta name="robots" content="width=device-width, noindex, nofollow, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- NAVIGATION ---------- */
+header { background: #002868; position: fixed; width: 100%; top: 0; z-index: 2000; height: 80px; display: flex; align-items: center; transition: transform 0.4s ease-in-out; }
+header.nav-hidden { transform: translateY(-100%); }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 0 60px; width: 100%; }
+.logo { display: flex; align-items: center; gap: 15px; }
+.logo img { height: 50px; }
+.logo-divider { width: 1px; height: 30px; background-color: rgba(255, 255, 255, 0.4); }
+
+.nav-container { display: flex; align-items: center; gap: 15px; z-index: 2100; }
+
+.nav-glass { position: relative; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); border-radius: 50px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; }
+nav ul { list-style: none; display: flex; align-items: center; }
+.nav-item { padding: 8px 24px; color: rgba(255, 255, 255, 0.8); font-weight: 500; font-size: 0.85rem; transition: color 0.3s; position: relative; display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 2;}
+.nav-item.active, .nav-item:hover { color: #fff; }
+
+.nav-lamp { position: absolute; height: 35px; top: 50%; transform: translateY(-50%); background: rgba(253, 185, 19, 0.15); border-radius: 25px; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); z-index: 1; pointer-events: none; opacity: 0; }
+.nav-lamp::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 10px; height: 2px; background: #fdb913; box-shadow: 0 0 12px 2px #fdb913; }
+
+/* ---------- DROPDOWN ---------- */
+.has-dropdown { position: relative; }
+.fa-chevron-down { font-size: 0.7rem; color: #fdb913; }
+.dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px) scale(0.9); background: rgba(0, 40, 104, 0.95); backdrop-filter: blur(25px); border-radius: 12px; padding: 10px 0; min-width: 200px; opacity: 0; visibility: hidden; transition: 0.3s ease; display: flex; flex-direction: column; list-style: none; z-index: 3000; pointer-events: none; }
+.dropdown-menu::before { content: ""; position: absolute; top: -25px; left: 0; width: 100%; height: 30px; background: transparent; }
+.has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(5px) scale(1); }
+.dropdown-menu a { display: block; padding: 15px 20px; color: white; font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; text-align: center; }
+
+/* ---------- HERO ---------- */
+.hire-hero { padding: 160px 10% 80px; text-align: center; background: radial-gradient(circle at top, #003380 0%, #0a0a0a 100%); border-bottom: 1px solid rgba(253, 185, 19, 0.1); }
+.hire-hero h1 { font-family: 'Cinzel', serif; font-size: 4.5rem; color: #fdb913; margin-bottom: 15px; text-transform: uppercase; }
+.hire-hero p { max-width: 700px; margin: 0 auto; font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); }
+
+/* ---------- SEARCH BAR ---------- */
+.search-container { max-width: 600px; margin: 30px auto 0; position: relative; padding: 0 20px; }
+#talent-search { width: 100%; padding: 15px 25px 15px 50px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+#talent-search:focus { background: rgba(255,255,255,0.1); border-color: #fdb913; }
+.search-icon { position: absolute; left: 40px; top: 50%; transform: translateY(-50%); color: #fdb913; }
+
+/* ---------- FILTERS ---------- */
+.filter-section { padding: 40px 10% 20px; text-align: center; }
+.filter-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+.filter-btn { padding: 8px 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; background: transparent; color: white; cursor: pointer; transition: 0.3s; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.filter-btn.active, .filter-btn:hover { background: #fdb913; color: #002868; border-color: #fdb913; }
+
+/* ---------- TALENT GRID ---------- */
+.talent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 10% 100px; align-items: start; }
+.brother-card { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 20px; 
+    padding: 30px 20px; 
+    text-align: center; 
+    backdrop-filter: blur(10px); 
+    transition: 0.4s; 
+    opacity: 1; 
+    height: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start;
+}
+.brother-card:hover { transform: translateY(-10px); border-color: #fdb913; background: rgba(255, 255, 255, 0.06); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.brother-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #fdb913; background-color: #222; align-self: center;}
+.brother-card h3 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 5px; color: #fdb913; }
+.grad-date { font-size: 0.75rem; font-weight: 700; color: #88aaff; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+
+.education-info { margin-bottom: 15px; min-height: 45px; display: flex; flex-direction: column; justify-content: center; }
+.major { font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #fff; }
+.minor { font-size: 0.7rem; opacity: 0.6; font-style: italic; margin-top: 3px; display: block; }
+
+.skills-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 20px; margin-top: auto; }
+.tag { font-size: 0.6rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 50px; white-space: nowrap; transition: 0.3s; }
+.brother-card:hover .tag { background: rgba(253, 185, 19, 0.2); color: #fdb913; }
+
+.card-links { display: flex; justify-content: center; gap: 15px; margin-top: 5px;}
+.card-links a { font-size: 1.8rem; color: white; transition: 0.3s; opacity: 0.7; }
+.card-links a:hover { color: #fdb913; opacity: 1; }
+
+.resume-btn { display: inline-block; padding: 20px 50px; background-color: #fdb913; color: #002868; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border-radius: 50px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); margin-top:30px; }
+.resume-btn:hover { background-color: #fff; transform: translateY(-5px); }
+
+/* ---------- STATUS STYLES ---------- */
+.status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 50px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; align-self: center; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; animation: status-pulse 2s infinite; }
+@keyframes status-pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+
+.status-seeking { background: rgba(107, 124, 255, 0.1); border: 1px solid #6b7cff; color: #6b7cff; }
+.status-hired { background: rgba(52, 152, 219, 0.1); border: 1px solid #3498db; color: #3498db; }
+.status-available { background: rgba(0, 255, 127, 0.1); border: 1px solid #00ff7f; color: #00ff7f; }
+
+.dot-blue { background-color: #3498db; box-shadow: 0 0 8px #3498db; }
+.dot-purple { background-color: #6b7cff; box-shadow: 0 0 8px #6b7cff; }
+.dot-green { background-color: #00ff7f; box-shadow: 0 0 8px #00ff7f; }
+
+.img-available { border: 3px solid #00ff7f !important; }
+.img-hired { border: 3px solid #3498db !important; }
+.img-seeking { border: 3px solid #6b7cff !important; }
+
+/* ---------- MOBILE OPTIMIZATIONS ---------- */
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 4000; }
+.menu-toggle span { width: 30px; height: 3px; background: #fdb918; border-radius: 3px; transition: 0.3s; }
+
+@media (max-width: 1024px) {
+    nav { padding: 0 20px; }
+    .logo img { height: 40px; }
+    .nav-glass { position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; background: rgba(0, 40, 104, 0.98); backdrop-filter: blur(20px); border-radius: 0; flex-direction: column; justify-content: center; transition: 0.5s; border: none; }
+    .nav-glass.active { right: 0; }
+    nav ul { flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+    .nav-item { font-size: 1.1rem; width: 100%; justify-content: center; padding: 12px 0; }
+    .menu-toggle { display: flex; }
+    .nav-lamp { display: none; }
+    .dropdown-menu { position: relative; top: 0; left: 0; transform: none !important; background: rgba(255,255,255,0.05); width: 90%; margin: 10px auto; display: none; opacity: 1; visibility: visible; pointer-events: auto; }
+    .has-dropdown.active .dropdown-menu { display: flex; }
+}
+
+@media (max-width: 768px) {
+    .hire-hero { padding: 140px 20px 60px; }
+    .hire-hero h1 { font-size: 2.5rem; }
+    .hire-hero p { font-size: 0.95rem; }
+    .filter-section { padding: 40px 5% 10px; }
+    .filter-container { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 15px; -webkit-overflow-scrolling: touch; }
+    .filter-btn { flex: 0 0 auto; white-space: nowrap; }
+    .talent-grid { grid-template-columns: 1fr; padding: 0 8% 80px; }
+    .search-container { margin: 20px auto 0; }
+}
+
+.menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+footer { padding: 60px; text-align: center; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <a href="index.html"><img src="utampa logo.png" alt="UT"></a>
+        </div>
+        <div class="nav-container">
+            <a href="index.html"></a>
+            <div class="menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+            <div class="nav-glass" id="nav-menu">
+                <div class="nav-lamp" id="lamp"></div>
+                <ul>
+                    <li class="nav-item" onclick="location.href='about.html'">About</li>
+                    <li class="nav-item" onclick="location.href='events.html'">Events</li>
+                    <li class="nav-item has-dropdown" id="family-trigger">
+                        The Family <i class="fas fa-chevron-down"></i>
+                        <ul class="dropdown-menu">
+                            <li><a href="officers.html">Officers</a></li>
+                            <li><a href="brothers.html">The Brothers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" onclick="location.href='donate.html'">Donate</li>
+                    <li class="nav-item" onclick="location.href='contact.html'">Contact</li>
+                    <li class="nav-item active" onclick="location.href='hire.html'">Hire a Brother</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="hire-hero">
+    <h1>Talent Network.</h1>
+    <p>Bridging the gap between elite corporate partners and the University of Tampa's highest-achieving professional leaders.</p>
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="talent-search" placeholder="Search by name, skill, or keyword...">
+    </div>
+</div>
+
+<section class="filter-section">
+    <div class="filter-container">
+        <button class="filter-btn active">All Brothers</button>
+        <button class="filter-btn">Finance</button>
+        <button class="filter-btn">Artificial Intelligence</button>
+        <button class="filter-btn">Accounting</button>
+        <button class="filter-btn">Marketing</button>
+        <button class="filter-btn">Management</button>
+        <button class="filter-btn">Entrepreneurship</button>
+        <button class="filter-btn">Cybersecurity</button>
+        <button class="filter-btn">Professional Selling</button>
+        <button class="filter-btn">Data Science</button>
+        <button class="filter-btn">Marine Science</button>
+        <button class="filter-btn">Biology</button>
+        <button class="filter-btn">Economics</button>
+        <button class="filter-btn">Computer Science</button>
+        <button class="filter-btn">Math</button>
+        <button class="filter-btn">Business</button>
+        <button class="filter-btn">International Business</button>
+    </div>
+</section>
+
+<div class="talent-grid" id="talent-grid">
+    <div class="brother-card" data-category="Accounting Excel Leadership Attention to Detail Meticulous">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Danielle Davidson.jpeg" class="img-available">
+        <h3>Danielle Davidson</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Excel</span><span class="tag">Leadership</span><span class="tag">Meticulous</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/danielle-davidson1/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="International Business and Management Cross Cultural Communication Organizational Operations Team Collaboration">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Azumi Ward.jpg" class="img-available">
+        <h3>Azumi Ward</h3>
+        <p class="grad-date">Class of 2026 (Dec)</p>
+        <div class="education-info"><span class="major">Intl. Business & Management</span></div>
+        <div class="skills-tags"><span class="tag">Cross-Cultural Communication</span><span class="tag">Organizational Operations</span><span class="tag">Team Collaboration</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/azumiward/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Professional Selling Underwriting Public Speaking Cold Calling">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Joey Petriello.jpeg" class="img-available">
+        <h3>Joseph Petriello</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Finance</span><span class="minor">Professional Selling</span></div>
+        <div class="skills-tags"><span class="tag">Underwriting</span><span class="tag">Public Speaking</span><span class="tag">Cold Calling</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/josephpetriello/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Artificial Intelligence Data Science Math AI Machine Learning Python Computer Science SQL R Predictive Modeling Neural Networks Software Engineering Big Data Analytics Tech Chair Leadership">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="me.jpg" class="img-available">
+        <h3>Dilan Kochhar</h3>
+        <p class="grad-date">Class of 2027 (Dec)</p>
+        <div class="education-info"><span class="major">Data Science</span><span class="minor">Math & Computer Science</span></div>
+        <div class="skills-tags"><span class="tag">Machine Learning</span><span class="tag">Python</span><span class="tag">Web Development</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/dilan-k/" target="_blank"><i class="fab fa-linkedin"></i></a><a href="https://github.com/Dilan1234321" target="_blank"><i class="fab fa-github"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Business Operations">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Sandra Nizborski.jpg" class="img-available">
+        <h3>Sandra Nizborski</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Business</span></div>
+        <div class="skills-tags"><span class="tag">Operations</span><span class="tag">Leadership</span></div>
+    </div>
+
+    <div class="brother-card" data-category="Business Administration Cash Flow Evaluation Excel Underwriting">
+        <div class="status-badge status-hired"><span class="status-dot dot-blue"></span>Hired • Summer 2026</div>
+        <img src="Dorian Furr.png" class="img-hired">
+        <h3>Dorian Furr</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Business Administration</span></div>
+        <div class="skills-tags"><span class="tag">Cash Flow Evaluation</span><span class="tag">Excel</span><span class="tag">Underwriting</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/dorian-furr" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Cybersecurity Financial Analysis">
+        <div class="status-badge status-seeking"><span class="status-dot dot-purple"></span>Seeking Full-Time Job</div>
+        <img src="Calabria Czarnecki.png" class="img-seeking">
+        <h3>Calabria Czarnecki</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Financial Modeling</span><span class="tag">Process Design</span><span class="tag">FinTech</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/calabriaczarnecki" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Economics Communication Analytics Time Management">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Claire Coates.png" class="img-available">
+        <h3>Claire Coates</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Economics</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Analytics</span><span class="tag">Time Management</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/clairecoatess/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance and Marketing Business Analytics Data Analytics Excel Problem Solving">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Vincent Mendel.png" class="img-available">
+        <h3>Vincent Mendel</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance & Marketing</span><span class="minor">Business Analytics</span></div>
+        <div class="skills-tags"><span class="tag">Data Analytics</span><span class="tag">Excel</span><span class="tag">Problem Solving</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/vincent-mendel-6298b7201/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Marine Science and Biology GIS Aquatic Husbandry Research">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Logan Kemmerer.jpeg" class="img-available">
+        <h3>Logan Kemmerer</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Marine Science-Biology</span></div>
+        <div class="skills-tags"><span class="tag">GIS</span><span class="tag">Aquatic Husbandry</span><span class="tag">Research</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/logan-kemmerer/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Cybersecurity Linux Problem Solving Communcation">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Ethan Deang.jpeg" class="img-available">
+        <h3>Ethan Deang</h3>
+        <p class="grad-date">Class of 2028</p>
+        <div class="education-info"><span class="major">Cybersecurity</span></div>
+        <div class="skills-tags"><span class="tag">Linux</span><span class="tag">Problem-Solving</span><span class="tag">Communication</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/ethan-deang/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Accounting Audit Tax Strategy">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Aiden Huber.png" class="img-available">
+        <h3>Aiden Huber</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Audit</span><span class="tag">Tax Strategy</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/aidenhuber/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Business Office 365 Leadership Communication">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Ainsley Jeffers.png" class="img-available">
+        <h3>Ainsley Jeffers</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Business</span></div>
+        <div class="skills-tags"><span class="tag">Office 365</span><span class="tag">Leadership</span><span class="tag">Communcation</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/ainsleyjeffers/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Asset Management Budgeting">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Connor Stacklum.png" class="img-available">
+        <h3>Connor Stacklum</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Asset Mgmt</span><span class="tag">Budgeting</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/connor-stacklum-a81a802b0/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="International Business and Economics Global Markets">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Sophia Carraway.png" class="img-available">
+        <h3>Sophia Carraway</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Intl. Business & Economics</span><span class="minor">Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Excel</span><span class="tag">Research & Methodology</span><span class="tag">Data Analysis</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/sophia-carraway/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Entrepreneurship Problem Solving Revenue Strategist Professional Selling">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Isabella Rivera.jpg" class="img-available">
+        <h3>Isabella Rivera</h3> 
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Entrepreneurship</span><span class="minor">Professional Selling</span></div>
+        <div class="skills-tags"><span class="tag">Problem-Solving<span><span class="tag">Revenue Strategist</span><span class="tag">CRM</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/isabella-rivera-9185431ba/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Accounting Financial">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Lorena Lopez.jpg" class="img-available">
+        <h3>Lorena Lopez</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Financial Acct</span><span class="tag">Professionalism</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/lorena-lopez2005/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Law Justice and Advocacy Due Dilligence Financial Analysis Legal Drafting">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Hayden Reich.jpeg" class="img-available">
+        <h3>Hayden Reich</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Finance</span><span class="minor">Law, Justice, & Advocacy</span></div>
+        <div class="skills-tags"><span class="tag">Due Dilligence</span><span class="tag">Financial Analysis</span><span class="tag">Legal Drafting</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/hayden-reich-tampa-xc/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="International Business and Marketing Data Analysis Market Research Public Speaking">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Tyler Mezadurian.jpeg" class="img-available">
+        <h3>Tyler Mezadurian</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Intl. Business & Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Public Speaking</span><span class="tag">Data Analysis</span><span class="tag">Market Research</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/tylermezadurian" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="International Business Fundraising Logistics">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Sam DeWeerdt.jpg" class="img-available">
+        <h3>Sam DeWeerdt</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Intl. Business</span></div>
+        <div class="skills-tags"><span class="tag">Fundraising</span><span class="tag">Logistics</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/samdeweerdt/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="International Business and Management Justice Law">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Madelyn Luber.jpg" class="img-available">
+        <h3>Madelyn Luber</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Intl. Business & Management</span><span class="minor">Justice & Law</span></div>
+        <div class="skills-tags"><span class="tag">Justice</span><span class="tag">Project Mgmt</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/madelyn-luber/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Banking Analysis">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Johnathan Cutura.png" class="img-available">
+        <h3>Jonathan Cutura</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Organization</span><span class="tag">Leadership</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/jonhathan-cutura/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Business Administration Service Planning">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Michael La Torre.jpg" class="img-available">
+        <h3>Michael La Torre</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Business Administration</span></div>
+        <div class="skills-tags"><span class="tag">Service</span><span class="tag">Planning</span></div>
+        <div class="card-links"><a href="https://www.linekdin.com/michael-la-torre-565096244/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Entrepreneurship Canva Office 365 Google Suite">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Sadie O'Connell.png" class="img-available">
+        <h3>Sadie O'Connell</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Entrepreneurship</span></div>
+        <div class="skills-tags"><span class="tag">Canva</span><span class="tag">Office 365</span><span class="tag">Google Suite</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/sadie-oconnell/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Marketing Inbound Sales Outbound Sales CRM">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Matthew Saddic.jpeg" class="img-available">
+        <h3>Matthew Saddic</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Inbound Sales</span><span class="tag">Outbound Sales</span><span class="tag">CRM</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/matthew-saddic/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Entrepreneurship Compliance Legal Research Financial Modeling">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Olivia Kelly.jpeg" class="img-available">
+        <h3>Olivia Kelly</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance</span><span class="minor">Entrepreneurship</span></div>
+        <div class="skills-tags"><span class="tag">Compliance</span><span class="tag">Legal Research</span><span class="tag">Financial Modeling</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/olivia-kelly-0b635a25b/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Business Management Communication Organization Team Collaboration">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Sofia Piasecki.jpeg" class="img-available">
+        <h3>Sophia Piasecki</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Business Management</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Organization</span><span class="tag">Team Collaboration</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/sofia-piasecki-b8351b2b0/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Sport Management and Finance Leadership Studies Event Management Sales CRM">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Porter Sherman.jpeg" class="img-available">
+        <h3>Porter Sherman</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Sport Mgmt & Finance</span><span class="minor">Leadership Studies</span></div>
+        <div class="skills-tags"><span class="tag">Event Management</span><span class="tag">Sales</span><span class="tag">CRM</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/sportersherman/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+
+    <div class="brother-card" data-category="Finance Professional Selling Excel Leadership Interpersonal">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Chloe Gibson.jpeg" class="img-available">
+        <h3>Chloe Gibson</h3>
+        <p class="grad-date">Class of 2028</p>
+        <div class="education-info"><span class="major">Finance</span><span class="minor">Professional Selling</span></div>
+        <div class="skills-tags"><span class="tag">Excel</span><span class="tag">Leadership</span><span class="tag">Interpersonal</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/chloe-gibson-616445333/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Marketing Public Speaking Professionalism Advertising">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Hailey Swenson.jpeg" class="img-available">
+        <h3>Hailey Swenson</h3>
+        <p class="grad-date">Class of 2029</p>
+        <div class="education-info"><span class="major">Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Public Speaking</span><span class="tag">Professionalism</span><span class="tag">Advertising</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/hailey-swenson-883099353/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Business Management Operations Communications Excel">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Joey Dibacco.jpeg" class="img-available">
+        <h3>Joseph DiBacco</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Business Management</span></div>
+        <div class="skills-tags"><span class="tag">Operations</span><span class="tag">Communications</span><span class="tag">Excel</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/joseph-dibacco/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Management Dive Master Diving Backend Development Assembly Gay">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Cameron Murray.jpg" class="img-available">
+        <h3>Cameron Murray</h3>
+        <p class="grad-date">Class of 2029</p>
+        <div class="education-info"><span class="major">Intl. Business & Management</span></div>
+        <div class="skills-tags"><span class="tag">Dive Master</span><span class="tag">Computers</span><span class="tag">Backend Development</span></div>
+    </div>
+    <div class="brother-card" data-category="Marketing Content Creation Communications Data Analysis">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Hannah Swenson.jpg" class="img-available">
+        <h3>Hannah Swenson</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Content Creation</span><span class="tag">Communication</span><span class="tag">Data Analysis</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/hannahmaeswen/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Marketing Networking Communication Excel">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Ryan Dwyer.jpeg" class="img-available">
+        <h3>Ryan Dwyer</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Networking</span><span class="tag">Communication</span><span class="tag">Excel</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/ryanwdwyer/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Financial Enterprise Systems Leadership Communication Coordination">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Patrick Boucher.jpeg" class="img-available">
+        <h3>Patrick Boucher</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Financial Enterprise Systems</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Leadership</span><span class="tag">Coordination</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/patrickboucher1/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Management Problem Solving Leadership Italian">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Tigris Gary.jpeg" class="img-available">
+        <h3>Tigris Gary</h3>
+        <p class="grad-date">Class of 2029</p>
+        <div class="education-info"><span class="major">International Business & Management</span></div>
+        <div class="skills-tags"><span class="tag">Problem-Solving</span><span class="tag">Leadership</span><span class="tag">Italian (Intermediate)</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/tigris-gary-830330395/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Accounting Finance Excel Financial Reporting Data Analysis">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Stephanie Grizzard.jpeg" class="img-available">
+        <h3>Stephanie Grizzard</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Accounting and Finance</span></div>
+        <div class="skills-tags"><span class="tag">Excel</span><span class="tag">Financial Reporting</span><span class="tag">Data Analysis</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/tigris-gary-830330395/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="MBA Marketing Business Management Social Media Management Leadership Content Creation">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Angela Celio.jpeg" class="img-available">
+        <h3>Angela Celio</h3>
+        <p class="grad-date">Graduate • Class of 2026 (Dec)</p>
+        <div class="education-info"><span class="major">MBA, Marketing Concentration</span><span class="minor">B.S. in Business Management</span></div>
+        <div class="skills-tags"><span class="tag">Social Media Management</span><span class="tag">Leadership</span><span class="tag">Content Creation</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/angelacelio/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance Communication Analytical Thinking Excel">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Christopher Erb.png" class="img-available">
+        <h3>Christopher Erb</h3>
+        <p class="grad-date">Class of 2029</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Analytical Thinking</span><span class="tag">Excel</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/christopher-erb-8762a638a/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance Stock Analysis Leadership Sales">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Dimitri Simeonidis.jpg" class="img-available">
+        <h3>Dimitri Simeonidis</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Stock Analysis</span><span class="tag">Sales</span><span class="tag">Leadership</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/dimitri-simeonidis/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance Communication Leadership Adaptability">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="David Olson.jpeg" class="img-available">
+        <h3>David Olson</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Leadership</span><span class="tag">Adaptability</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/david-olson-spartans/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance International Business and Marketing Spanish Adaptability Financial Analysis Operational Analysis">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="GianLuca Sofsky.jpg" class="img-available">
+        <h3>GianLuca Sofsky</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Intl. Business & Marketing</span><span class="minor">Finance & Spanish</span></div>
+        <div class="skills-tags"><span class="tag">Operational Analysis</span><span class="tag">Financial Analysis</span><span class="tag">Spanish (Intermediate)</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/gianluca-sofsky/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance Leadership Communication Work Ethic">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Tate Antinucci.jpeg" class="img-available">
+        <h3>Tate Antinucci</h3>
+        <p class="grad-date">Class of 2029</p>
+        <div class="education-info"><span class="major">Finance</span></div>
+        <div class="skills-tags"><span class="tag">Leadership</span><span class="tag">Communication</span><span class="tag">Work Ethic</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/tateantinucci/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Marketing Data Analytics Leadership Project Management">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Kaija Ahlmann.jpeg" class="img-available">
+        <h3>Kaija Ahlmann</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Intl. Business & Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Data Analytics</span><span class="tag">Leadership</span><span class="tag">Project Management</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/kaija-ahlmann-76646329b/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Management Cross Cultural Communication Leadership Adaptability">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Kaitlyn Ickes.png" class="img-available">
+        <h3>Kaitlyn Ickes</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Intl. Business & Management</span></div>
+        <div class="skills-tags"><span class="tag">Cross-Cultural Communication</span><span class="tag">Leadership</span><span class="tag">Adaptability</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/kaitlynickes/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Marketing Social Media Marketing Organizational Skills Consulting">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Landen Schneider.jpeg" class="img-available">
+        <h3>Landen Schneider</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Intl. Business & Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Social Media Marketing</span><span class="tag">Organizational Skills</span><span class="tag">Consulting</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/landen-schneider-36aaa5244/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Finance Global Market Research Data Analysis Valuation">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Zach George.jpeg" class="img-available">
+        <h3>Zachary George</h3>
+        <p class="grad-date">Class of 2028</p>
+        <div class="education-info"><span class="major">Intl. Business & Finance</span></div>
+        <div class="skills-tags"><span class="tag">Global Market Research</span><span class="tag">Data Analysis</span><span class="tag">Valuation</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/zach-george-78821b24b/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="International Business and Management Multilingual English Chinese Hmong ASL Project Management Negotiation">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Amelia Yang.jpg" class="img-available">
+        <h3>Amelia Yang</h3>
+        <p class="grad-date">Class of 2026 (Dec)</p>
+        <div class="education-info"><span class="major">Intl. Business & Management</span></div>
+        <div class="skills-tags"><span class="tag">Multilingual (English, Chinese, Hmong, ASL)</span><span class="tag">Project Management</span><span class="tag">Negotiation</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/amelianyang/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Advertising and Public Relations Communication Critical Thinking Teamwork">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Giovanna Salvaggio.jpg" class="img-available">
+        <h3>Giovanna Salvaggio</h3>
+        <p class="grad-date">Class of 2027</p>
+        <div class="education-info"><span class="major">Advertising & Public Relations</span></div>
+        <div class="skills-tags"><span class="tag">Communication</span><span class="tag">Critical Thinking</span><span class="tag">Teamwork</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/giovanna-salvaggio/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Marketing Promotion Branding Content Creation">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Emma Zayas.jpeg" class="img-available">
+        <h3>Emma Zayas</h3>
+        <p class="grad-date">Class of 2026</p>
+        <div class="education-info"><span class="major">Marketing</span></div>
+        <div class="skills-tags"><span class="tag">Promotion</span><span class="tag">Branding</span><span class="tag">Content Creation</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/emma-zayas/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Finance and Accounting Financial Modeling Excel Data Analysis">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Nichloas DiMarzo.jpg" class="img-available">
+        <h3>Nicholas DiMarzo</h3>
+        <p class="grad-date">Class of 2028</p>
+        <div class="education-info"><span class="major">Finance & Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Financial Modeling</span><span class="tag">Excel</span><span class="tag">Data Analysis</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/nicholas-dimarzo/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+    <div class="brother-card" data-category="Accounting Taxes Financial Reporting Budgets">
+        <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
+        <img src="Jamie Young.JPG" class="img-available">
+        <h3>Jamie Young</h3>
+        <p class="grad-date">Class of 2026 (Dec)</p>
+        <div class="education-info"><span class="major">Accounting</span></div>
+        <div class="skills-tags"><span class="tag">Taxes</span><span class="tag">Financial Reporting</span><span class="tag">Budgets</span></div>
+        <div class="card-links"><a href="https://www.linkedin.com/in/jamieeyoungg/" target="_blank"><i class="fab fa-linkedin"></i></a></div>
+    </div>
+</div>
+
+<section class="resume-book-section" style="background:#002868; padding:80px 10%; text-align:center;">
+    <h2>Access the Resume Portfolio</h2>
+    <br>
+    <p>Corporate partners can access our private chapter roster and resume database.</p>
+    <a href="contact.html" class="resume-btn">Request Full Book</a>
+</section>
+
+<footer>© 2026 ALPHA KAPPA PSI — PHI UPSILON CHAPTER — UNIVERSITY OF TAMPA</footer>
+
+<script>
+    const lamp = document.getElementById("lamp");
+    const navItems = document.querySelectorAll(".nav-item");
+    const header = document.querySelector("header");
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.brother-card');
+    const searchInput = document.getElementById('talent-search');
+    const mobileToggle = document.getElementById("mobile-toggle");
+    const navMenu = document.getElementById("nav-menu");
+    const familyTrigger = document.getElementById('family-trigger');
+    let lastScrollY = window.scrollY;
+
+    function moveLamp(el) {
+        if(!el || window.innerWidth <= 1024) { lamp.style.opacity = "0"; return; }
+        const parentRect = el.closest('.nav-glass').getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+        lamp.style.opacity = "1";
+        lamp.style.width = rect.width + "px";
+        lamp.style.left = (rect.left - parentRect.left) + "px";
+    }
+
+    window.onload = () => moveLamp(document.querySelector('.nav-item.active'));
+    navItems.forEach(item => {
+        item.addEventListener("mouseenter", (e) => moveLamp(e.currentTarget));
+        item.addEventListener("mouseleave", () => moveLamp(document.querySelector(".nav-item.active")));
+    });
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+            mobileToggle.classList.toggle("active");
+        });
+    }
+
+    if (familyTrigger) {
+        familyTrigger.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                familyTrigger.classList.toggle('active');
+            }
+        });
+    }
+
+    function performFilter() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeBtn = document.querySelector('.filter-btn.active');
+        const categoryFilter = activeBtn.innerText.trim().toUpperCase();
+
+        cards.forEach(card => {
+            const cardData = card.getAttribute('data-category').toUpperCase();
+            const cardText = card.innerText.toLowerCase();
+            const matchesCategory = (categoryFilter === "ALL BROTHERS" || cardData.includes(categoryFilter));
+            const matchesSearch = cardText.includes(searchTerm) || cardData.toLowerCase().includes(searchTerm);
+
+            if (matchesCategory && matchesSearch) {
+                card.style.display = "flex";
+                setTimeout(() => card.style.opacity = "1", 10);
+            } else {
+                card.style.opacity = "0";
+                setTimeout(() => card.style.display = "none", 300);
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', performFilter);
+    filterBtns.forEach(btn => btn.addEventListener('click', (e) => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        performFilter();
+    }));
+
+    window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY && currentScrollY > 80) header.classList.add("nav-hidden");
+        else header.classList.remove("nav-hidden");
+        lastScrollY = currentScrollY;
+    });
+</script>
+</body>
+</html>
