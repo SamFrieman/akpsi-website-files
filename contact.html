@@ -9,6 +9,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+/* ---------- DARK MODE VARIABLES ---------- */
+:root {
+    --bg-primary: #fdfdfd;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --text-tertiary: #666;
+    --card-bg: #ffffff;
+    --border-color: #eee;
+    --input-bg: #f9f9f9;
+    --input-border: #ddd;
+}
+
+body.dark-mode {
+    --bg-primary: #0a0a0a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #888;
+    --card-bg: #1a1a1a;
+    --border-color: #333;
+    --input-bg: #1a1a1a;
+    --input-border: #444;
+}
 /* ---------- CORE STYLING ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 body { line-height: 1.6; background: #fdfdfd; color: #333; overflow-x: hidden; position: relative; min-height: 100vh; display: flex; flex-direction: column; }
@@ -180,6 +202,109 @@ nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
 }
 
 footer { background: #001b44; color: white; text-align: center; padding: 40px; font-size: 0.85rem; letter-spacing: 2px; margin-top: auto; }
+
+/* ---------- DARK MODE TOGGLE ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #002868;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: #fdb913;
+}
+
+.dark-mode-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.dark-mode-toggle:hover i {
+    color: #002868;
+}
+
+@media (max-width: 1024px) {
+    .dark-mode-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* ---------- DARK MODE STYLES ---------- */
+body { 
+    background: var(--bg-primary); 
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-section { 
+    background: var(--bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+.contact-info p { 
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+}
+
+.info-item span { 
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.contact-form { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .contact-form {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.form-group input, 
+.form-group textarea { 
+    background: var(--input-bg); 
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+    background: var(--card-bg);
+    box-shadow: 0 5px 15px rgba(253, 185, 19, 0.1);
+}
+.contact-info h2 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .contact-info h2 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+.info-item h4 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .info-item h4 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
 </style>
 </head>
 
@@ -331,5 +456,10 @@ footer { background: #001b44; color: white; text-align: center; padding: 40px; f
         lastScrollY = currentScrollY;
     });
 </script>
+<div class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
+
+<script src="darkmode.js"></script>
 </body>
 </html>
