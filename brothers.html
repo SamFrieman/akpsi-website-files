@@ -9,6 +9,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+/* ---------- DARK MODE VARIABLES ---------- */
+:root {
+    --bg-primary: #fdfdfd;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --card-bg: #ffffff;
+    --border-color: #eee;
+    --shadow-light: rgba(0,0,0,0.03);
+}
+
+body.dark-mode {
+    --bg-primary: #0a0a0a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --card-bg: #1a1a1a;
+    --border-color: #333;
+    --shadow-light: rgba(0,0,0,0.3);
+}
 /* ---------- CORE STYLING ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 body { line-height: 1.6; background: #fdfdfd; color: #333; overflow-x: hidden; position: relative; min-height: 100vh; }
@@ -117,6 +135,90 @@ nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
 .brother-info p { color: #fdb913; font-weight: 700; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 1px; }
 
 footer { background: #001b44; color: white; text-align: center; padding: 40px 20px; font-size: 0.8rem; letter-spacing: 1px; }
+
+/* ---------- DARK MODE TOGGLE ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #002868;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: #fdb913;
+}
+
+.dark-mode-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.dark-mode-toggle:hover i {
+    color: #002868;
+}
+
+@media (max-width: 768px) {
+    .dark-mode-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* ---------- DARK MODE STYLES ---------- */
+body { 
+    background: var(--bg-primary); 
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.brother-card { 
+    background: var(--card-bg);
+    box-shadow: 0 5px 15px var(--shadow-light);
+    border: 1px solid var(--border-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.dark-mode .brother-card:hover {
+    box-shadow: 0 30px 60px rgba(253, 185, 19, 0.15);
+}
+
+.brother-info h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .brother-info h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+/* Dark mode for filter section */
+body.dark-mode .filter-section h2 {
+    color: #5b9bd5;
+}
+
+body.dark-mode .filter-btn {
+    background: #1a1a1a;
+    color: #b0b0b0;
+    border-color: #333;
+}
+
+body.dark-mode .filter-btn.active,
+body.dark-mode .filter-btn:hover {
+    background: rgba(253, 185, 19, 0.15);
+    color: #fdb913;
+    border-color: #fdb913;
+}
 </style>
 </head>
 
@@ -402,7 +504,7 @@ footer { background: #001b44; color: white; text-align: center; padding: 40px 20
         <div class="brother-info"><h3>Landon Keith</h3><p>Delta Class</p></div>
     </div>
     <div class="brother-card" data-class="Delta">
-        <div class="brother-img" style="background-image: url('Riley johnson.jpg');"></div>
+        <div class="brother-img" style="background-image: url('Riley Johnson.jpeg');"></div>
         <div class="brother-info"><h3>Riley Johnson</h3><p>Delta Class</p></div>
     </div>
 </div>
@@ -499,6 +601,10 @@ footer { background: #001b44; color: white; text-align: center; padding: 40px 20
         lastScrollY = currentScrollY;
     });
 </script>
+<div class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
 
+<script src="darkmode.js"></script>
 </body>
 </html>
