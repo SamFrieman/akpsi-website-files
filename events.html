@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        /* ---------- DARK MODE VARIABLES ---------- */
+        :root {
+            --bg-primary: #fdfdfd;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --text-tertiary: #666;
+            --card-bg: #ffffff;
+            --border-color: #eee;
+            --border-light: #f1f1f1;
+        }
+        
+        body.dark-mode {
+            --bg-primary: #0a0a0a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #888;
+            --card-bg: #1a1a1a;
+            --border-color: #333;
+            --border-light: #2a2a2a;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
         body { line-height: 1.6; background: #fdfdfd; color: #333; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
@@ -253,6 +273,132 @@
         .cal-info { font-size: 0.85rem; color: #666; margin-top: 5px; display: flex; align-items: center; gap: 10px; }
 
         footer { background: #001b44; color: white; text-align: center; padding: 40px 20px; font-size: 0.8rem; letter-spacing: 2px; }
+        /* ---------- DARK MODE TOGGLE ---------- */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #002868;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            background: #fdb913;
+        }
+        
+        .dark-mode-toggle i {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .dark-mode-toggle:hover i {
+            color: #002868;
+        }
+        
+        @media (max-width: 768px) {
+            .dark-mode-toggle {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        /* ---------- DARK MODE STYLES ---------- */
+        body { 
+            background: var(--bg-primary); 
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .scrapbook-wrapper { 
+            background: var(--card-bg);
+            transition: background-color 0.3s ease;
+        }
+        
+        .content { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.6s ease-out;
+        }
+        
+        body.dark-mode .content {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .content p {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        
+        .timeline::after { 
+            background: var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .event-container::after { 
+            background-color: var(--card-bg); 
+            transition: background-color 0.3s ease;
+        }
+        
+        .calendar-section { 
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .cal-card { 
+            background: var(--card-bg); 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .cal-card {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        body.dark-mode .cal-card:hover {
+            box-shadow: 0 20px 50px rgba(253, 185, 19, 0.15);
+        }
+        
+        .cal-info { 
+            color: var(--text-tertiary);
+            transition: color 0.3s ease;
+        }
+        .section-title h2 {
+        transition: color 0.3s ease;
+        }
+        
+        body.dark-mode .section-title h2 {
+            color: #5b9bd5; /* Light blue for dark mode */
+        }
+        
+        .content h3 {
+            transition: color 0.3s ease;
+        }
+        
+        body.dark-mode .content h3 {
+            color: #5b9bd5; /* Light blue for dark mode */
+        }
+        
+        .cal-body h4 {
+            transition: color 0.3s ease;
+        }
+        
+        body.dark-mode .cal-body h4 {
+            color: #5b9bd5; /* Light blue for dark mode */
+        }
     </style>
 </head>
 
@@ -442,6 +588,10 @@
         lastScrollY = currentScrollY;
     });
 </script>
+<div class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
 
+<script src="darkmode.js"></script>
 </body>
 </html>
