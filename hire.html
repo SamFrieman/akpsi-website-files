@@ -9,6 +9,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+/* ---------- DARK MODE VARIABLES ---------- */
+:root {
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode {
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.15);
+}
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
@@ -142,6 +152,71 @@ nav ul { list-style: none; display: flex; align-items: center; }
 .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
 footer { padding: 60px; text-align: center; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* ---------- DARK MODE TOGGLE ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #002868;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: #fdb913;
+}
+
+.dark-mode-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.dark-mode-toggle:hover i {
+    color: #002868;
+}
+
+/* Dark mode enhancements */
+body.dark-mode .brother-card { 
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+}
+
+body.dark-mode .brother-card:hover { 
+    box-shadow: 0 30px 60px rgba(253, 185, 19, 0.15);
+}
+.hire-hero h1 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .hire-hero h1 {
+    color: #5b9bd5; /* Light blue for dark mode - enhances visibility */
+}
+
+.brother-card h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .brother-card h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+.resume-book-section h2 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .resume-book-section h2 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
 </style>
 </head>
 <body>
@@ -676,7 +751,7 @@ footer { padding: 60px; text-align: center; opacity: 0.5; font-size: 0.8rem; bor
     </div>
     <div class="brother-card" data-category="Marketing Promotion Branding Content Creation">
         <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
-        <img src="Emma Zayas.jpeg" class="img-available">
+        <img src="emma zayas.jpg" class="img-available">
         <h3>Emma Zayas</h3>
         <p class="grad-date">Class of 2026</p>
         <div class="education-info"><span class="major">Marketing</span></div>
@@ -694,7 +769,7 @@ footer { padding: 60px; text-align: center; opacity: 0.5; font-size: 0.8rem; bor
     </div>
     <div class="brother-card" data-category="Accounting Taxes Financial Reporting Budgets">
         <div class="status-badge status-available"><span class="status-dot dot-green"></span>Available for Internship</div>
-        <img src="Jamie Young.JPG" class="img-available">
+        <img src="jamie young.jpg" class="img-available">
         <h3>Jamie Young</h3>
         <p class="grad-date">Class of 2026 (Dec)</p>
         <div class="education-info"><span class="major">Accounting</span></div>
@@ -789,5 +864,10 @@ footer { padding: 60px; text-align: center; opacity: 0.5; font-size: 0.8rem; bor
         lastScrollY = currentScrollY;
     });
 </script>
+<div class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
+
+<script src="darkmode.js"></script>
 </body>
 </html>
