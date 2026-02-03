@@ -9,6 +9,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+/* ---------- DARK MODE VARIABLES ---------- */
+:root {
+    --tier-card-bg: #fff;
+    --tier-text: #333;
+    --tier-border: #e0e0e0;
+    --contact-bg: #fff;
+}
+
+body.dark-mode {
+    --tier-card-bg: #1a1a1a;
+    --tier-text: #e0e0e0;
+    --tier-border: #333;
+    --contact-bg: #0a0a0a;
+}
 /* ---------- CORE STYLING ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; }
@@ -468,6 +482,148 @@ footer { background: #001b44; color: white; text-align: center; padding: 60px 20
     .enter-btn { width: 100%; }
     .executive-banner { flex-direction: column; text-align: center; }
 }
+/* ---------- DARK MODE TOGGLE ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #002868;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: #fdb913;
+}
+
+.dark-mode-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.dark-mode-toggle:hover i {
+    color: #002868;
+}
+
+@media (max-width: 1024px) {
+    .dark-mode-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* ---------- DARK MODE STYLES ---------- */
+.tiers-section { 
+    background: var(--tier-card-bg);
+    transition: background-color 0.3s ease;
+}
+
+.tier-card {
+    background: var(--tier-card-bg);
+    border: 1px solid var(--tier-border);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+body.dark-mode .tier-card {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .tier-card:hover {
+    box-shadow: 0 30px 60px rgba(253, 185, 19, 0.2);
+}
+
+.tier-card h3 { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+
+.price { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+
+.tier-card li { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+
+.tier-card li::before { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+
+/* Elite tier keeps its special styling */
+.tier-card.elite h3,
+.tier-card.elite .price,
+.tier-card.elite li,
+.tier-card.elite li::before {
+    color: #fdb913 !important;
+}
+
+.tier-card.elite li {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.contact-section { 
+    background: var(--contact-bg);
+    transition: background-color 0.3s ease;
+}
+
+.ex-email { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+.investment-header h2,
+.gate-text h2,
+.auth-modal h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .investment-header h2 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+.ex-info h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .ex-info h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+.plat-main-info h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .plat-main-info h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+/* Keep tier card h3 as defined earlier */
+.tier-card h3 { 
+    color: var(--tier-text);
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .tier-card h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+/* Elite tier keeps gold */
+.tier-card.elite h3 {
+    color: #fdb913 !important;
+}
 </style>
 </head>
 
@@ -715,5 +871,10 @@ footer { background: #001b44; color: white; text-align: center; padding: 60px 20
         observer.observe(section);
     });
 </script>
+<div class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
+
+<script src="darkmode.js"></script>
 </body>
 </html>
