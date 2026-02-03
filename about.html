@@ -9,6 +9,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+/* ---------- DARK MODE VARIABLES ---------- */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #fdfdfd;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --text-tertiary: #666;
+    --border-color: #eee;
+    --card-bg: #ffffff;
+    --shadow-light: rgba(0,0,0,0.05);
+    --shadow-medium: rgba(0,0,0,0.1);
+}
+
+body.dark-mode {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #888;
+    --border-color: #333;
+    --card-bg: #1a1a1a;
+    --shadow-light: rgba(0,0,0,0.3);
+    --shadow-medium: rgba(0,0,0,0.5);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
 body { line-height: 1.6; background: #0a0a0a; color: white; overflow-x: hidden; position: relative; min-height: 100vh; display: flex; flex-direction: column; }
 a { text-decoration: none; color: inherit; }
@@ -254,6 +279,109 @@ nav ul { list-style: none; display: flex; position: relative; z-index: 2; }
 .gov-btn:hover { background: #fdb913; color: #002868; border-color: #fdb913; transform: translateY(-3px); }
 
 footer { padding: 50px; text-align: center; background: #002868; font-size: 0.85rem; letter-spacing: 2px; color: #eee; position: relative; z-index: 200; margin-top: auto; }
+
+/* ---------- DARK MODE TOGGLE ---------- */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #002868;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    background: #fdb913;
+}
+
+.dark-mode-toggle i {
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover i {
+    color: #002868;
+}
+
+@media (max-width: 768px) {
+    .dark-mode-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* ---------- DARK MODE STYLES ---------- */
+body { 
+    background: var(--bg-primary); 
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chapter-intro { 
+    background: var(--bg-primary); 
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chapter-intro p { 
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.values-strip { 
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.value-block { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px var(--shadow-light);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.dark-mode .value-block:hover {
+    box-shadow: 0 15px 40px rgba(253, 185, 19, 0.2);
+}
+
+.value-block p {
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+.chapter-intro h2,
+.values-header h2,
+.history-card h2,
+.governance-section h2 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .chapter-intro h2,
+body.dark-mode .values-header h2,
+body.dark-mode .history-card h2,
+body.dark-mode .governance-section h2 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
+
+.value-block h3 {
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .value-block h3 {
+    color: #5b9bd5; /* Light blue for dark mode */
+}
 </style>
 </head>
 
@@ -442,5 +570,11 @@ window.addEventListener('scroll', () => {
     lastScrollY = currentScrollY;
 });
 </script>
+<!-- Dark Mode Toggle -->
+<div class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon" id="modeIcon"></i>
+</div>
+
+<script src="darkmode.js"></script>
 </body>
 </html>
